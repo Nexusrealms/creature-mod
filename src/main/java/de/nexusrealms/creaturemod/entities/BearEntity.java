@@ -7,30 +7,29 @@ import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.HoglinBrain;
-import net.minecraft.entity.mob.HoglinEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.WolfEntity;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.mob.*;
+import net.minecraft.entity.passive.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
 
-public class BearEntity extends AnimalEntity {
-    protected static final ImmutableList<? extends SensorType<? extends Sensor<? super BearEntity>>> SENSOR_TYPES = ImmutableList.of(
-            SensorType.NEAREST_LIVING_ENTITIES,
-            SensorType.NEAREST_PLAYERS);
-    protected static final ImmutableList<? extends MemoryModuleType<?>> MEMORY_MODULE_TYPES = ImmutableList.of(
-            MemoryModuleType.ANGRY_AT,
-            MemoryModuleType.WALK_TARGET,
-            MemoryModuleType.LOOK_TARGET,
-            MemoryModuleType.PATH,
-            MemoryModuleType.BREED_TARGET);
+import java.util.UUID;
+
+public class BearEntity extends AnimalEntity implements Angerable, GeoAnimatable {
+    @Nullable
+    private UUID angryAt;
+    private int angerTime;
     protected BearEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -55,15 +54,60 @@ public class BearEntity extends AnimalEntity {
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1).build();
 
     }
-/*    protected Brain.Profile<BearEntity> createBrainProfile() {
-        return Brain.createProfile(MEMORY_MODULE_TYPES, SENSOR_TYPES);
+
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new SwimGoal(this));
+        this.goalSelector.add(4, new PounceAtTargetGoal(this, 0.4F));
+        this.goalSelector.add(5, new MeleeAttackGoal(this, 1.0, true));
+        this.goalSelector.add(7, new AnimalMateGoal(this, 1.0));
+        this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
+        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(10, new LookAroundGoal(this));
+        this.targetSelector.add(3, (new RevengeGoal(this)).setGroupRevenge());
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
+        this.targetSelector.add(7, new ActiveTargetGoal<>(this, SalmonEntity.class, false));
+        this.targetSelector.add(8, new UniversalAngerGoal<>(this, true));
+        super.initGoals();
     }
 
-    protected Brain<?> deserializeBrain(Dynamic<?> dynamic) {
-        return BearBrain.create(this.createBrainProfile().deserialize(dynamic));
+    @Override
+    public int getAngerTime() {
+        return angerTime;
     }
 
-    public Brain<BearEntity> getBrain() {
-        return (Brain<BearEntity>) super.getBrain();
-    }*/
+    @Override
+    public void setAngerTime(int angerTime) {
+        this.angerTime = angerTime;
+    }
+
+    @Override
+    public @Nullable UUID getAngryAt() {
+        return angryAt;
+    }
+
+    @Override
+    public void setAngryAt(@Nullable UUID angryAt) {
+        this.angryAt = angryAt;
+    }
+
+    @Override
+    public void chooseRandomAngerTime() {
+        angerTime = 50;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return null;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
+    }
 }
