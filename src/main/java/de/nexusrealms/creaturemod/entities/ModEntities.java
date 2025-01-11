@@ -33,7 +33,7 @@ public class ModEntities {
                                                                          EntityType<T> entityType,
                                                                          Supplier<SpawnEggItem> eggItemSupplier,
                                                                          Supplier<DefaultAttributeContainer> containerSupplier){
-        Registry.register(Registries.ITEM, CreatureMod.id(name + "spawn_egg"), eggItemSupplier.get());
+        Registry.register(Registries.ITEM, CreatureMod.id(name + "_spawn_egg"), eggItemSupplier.get());
         return create(name, entityType, containerSupplier);
     }
     private static <T extends LivingEntity> EntityType<T> create(String name,

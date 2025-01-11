@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"de.nexusrealms.creaturemod.CreatureMod"
+		],
+		"client": [
+			"de.nexusrealms.creaturemod.client.CreatureModClient"
 		]
 	},
 	"mixins": [

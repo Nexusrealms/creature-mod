@@ -18,6 +18,11 @@ public class CreatureMod implements ModInitializer {
 	public static Identifier id(String name){
 		return Identifier.of(MOD_ID, name);
 	}
+	public static Identifier geoModelId(String path){ return id("geo/" + path + ".geo.json");}
+	public static Identifier geoAnimId(String path){ return id("animations/" + path + ".animation.json");}
+	public static Identifier entityTextureId(String path){ return id("textures/entity/" + path + ".png");}
+
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.

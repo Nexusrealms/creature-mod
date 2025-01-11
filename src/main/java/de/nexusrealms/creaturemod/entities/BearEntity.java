@@ -23,10 +23,19 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
 
 public class BearEntity extends AnimalEntity implements Angerable, GeoAnimatable {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    protected static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.bear.walk");
+    protected static final RawAnimation STANDUP = RawAnimation.begin().thenPlay("animation.bear.standup");
+
+
     @Nullable
     private UUID angryAt;
     private int angerTime;
@@ -49,9 +58,7 @@ public class BearEntity extends AnimalEntity implements Angerable, GeoAnimatable
     public static DefaultAttributeContainer getDefaultAttributes(){
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 1.0f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.0f)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1).build();
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30000001192092896).build();
 
     }
 
@@ -96,15 +103,23 @@ public class BearEntity extends AnimalEntity implements Angerable, GeoAnimatable
         angerTime = 50;
     }
 
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "Moving", 0, state -> {
+            if(state.isMoving()){
+                return state.setAndContinue(WALK);
+            }
+            return PlayState.STOP;
+        }));
+        controllers.add(new AnimationController<>(this, "Attacking", 5, state -> PlayState.CONTINUE).triggerableAnim("Attack", STANDUP));
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return null;
+        return cache;
     }
+
 
     @Override
     public double getTick(Object o) {
