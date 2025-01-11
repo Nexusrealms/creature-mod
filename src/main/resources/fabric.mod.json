@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"de.nexusrealms.creaturemod.client.CreatureModClient"
+		],
+		"cardinal-components-entity": [
+			"de.nexusrealms.creaturemod.ModEntityComponents"
 		]
 	},
 	"mixins": [
@@ -33,5 +36,10 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"custom": {
+		"cardinal-components": [
+			"creature-mod:curses"
+		]
 	}
 }

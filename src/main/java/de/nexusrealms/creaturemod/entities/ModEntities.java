@@ -2,6 +2,7 @@ package de.nexusrealms.creaturemod.entities;
 
 import de.nexusrealms.creaturemod.CreatureMod;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
@@ -12,6 +13,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.DefaultAttributeRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -26,14 +28,16 @@ public class ModEntities {
                                                                          int primaryColor,
                                                                          int secondaryColor,
                                                                          Supplier<DefaultAttributeContainer> containerSupplier){
-        return createWithSpawnEgg(name, entityType, () -> new SpawnEggItem(entityType, primaryColor, secondaryColor,
+        return createWithSpawnEgg(name, entityType, new SpawnEggItem(entityType, primaryColor, secondaryColor,
                 new Item.Settings()), containerSupplier);
     }
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,
-                                                                         Supplier<SpawnEggItem> eggItemSupplier,
+                                                                         SpawnEggItem eggItemSupplier,
                                                                          Supplier<DefaultAttributeContainer> containerSupplier){
-        Registry.register(Registries.ITEM, CreatureMod.id(name + "_spawn_egg"), eggItemSupplier.get());
+
+        Registry.register(Registries.ITEM, CreatureMod.id(name + "_spawn_egg"), eggItemSupplier);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(fabricItemGroupEntries -> fabricItemGroupEntries.add(eggItemSupplier));
         return create(name, entityType, containerSupplier);
     }
     private static <T extends LivingEntity> EntityType<T> create(String name,
