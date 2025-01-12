@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 
 public class ModEntities {
     public static final EntityType<BearEntity> BEAR = createWithSpawnEgg("bear", EntityType.Builder.create(BearEntity::new, SpawnGroup.CREATURE)
-            .dimensions(2f, 1.5f).build(), 0xFFFFFF, 0x000000, BearEntity::getDefaultAttributes);
+            .dimensions(1.2f, 1f).build(), 0xFFFFFF, 0x000000, BearEntity::getDefaultAttributes);
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,
                                                                          int primaryColor,
