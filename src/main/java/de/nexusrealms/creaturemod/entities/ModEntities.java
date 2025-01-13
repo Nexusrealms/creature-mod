@@ -1,28 +1,28 @@
 package de.nexusrealms.creaturemod.entities;
 
 import de.nexusrealms.creaturemod.CreatureMod;
-import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.DefaultAttributeRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 
 import java.util.function.Supplier;
 
 public class ModEntities {
     public static final EntityType<BearEntity> BEAR = createWithSpawnEgg("bear", EntityType.Builder.create(BearEntity::new, SpawnGroup.CREATURE)
             .dimensions(1.2f, 1f).build(), 0xFFFFFF, 0x000000, BearEntity::getDefaultAttributes);
+    public static final EntityType<WerewolfEntity> WEREWOLF = createWithSpawnEgg("werewolf", EntityType.Builder.create(WerewolfEntity::new, SpawnGroup.CREATURE)
+            .dimensions(1.2f, 1f).build(), 0xFFFFFF, 0x000000, WerewolfEntity::getDefaultAttributes);
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,
                                                                          int primaryColor,
@@ -50,4 +50,8 @@ public class ModEntities {
         return Registry.register(Registries.ENTITY_TYPE, CreatureMod.id(name), entityType);
     }
     public static void init(){}
+    public static <T extends EntityType<E>, E extends Entity> RegistryEntry.Reference<T> entryOf(T value){
+        RegistryEntry.Reference<T> reference = (RegistryEntry.Reference<T>) Registries.ENTITY_TYPE.createEntry(value);
+        return reference;
+    }
 }

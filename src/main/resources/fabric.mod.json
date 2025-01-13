@@ -39,7 +39,9 @@
 	},
 	"custom": {
 		"cardinal-components": [
-			"creature-mod:curses"
+			"creature-mod:curses",
+			"creature-mod:therianthropy"
+
 		]
 	}
 }

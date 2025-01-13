@@ -159,7 +159,6 @@ public class BearEntity extends AnimalEntity implements Angerable, GeoEntity {
         controllers.add(new AnimationController<>(this, "Moving", 0, state ->
         {
             if(state.isMoving()){
-                CreatureMod.LOGGER.info(String.valueOf(state.getAnimatable().getVelocity().length()));
                 if(state.getAnimatable().getVelocity().length() > 0.1){
                     return state.setAndContinue(RUN);
                 } else {

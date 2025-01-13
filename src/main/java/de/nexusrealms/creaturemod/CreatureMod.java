@@ -1,5 +1,7 @@
 package de.nexusrealms.creaturemod;
 
+import de.nexusrealms.creaturemod.curses.Curse;
+import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.entities.ModEntities;
 import de.nexusrealms.creaturemod.items.ModItems;
 import net.fabricmc.api.ModInitializer;
@@ -34,6 +36,7 @@ public class CreatureMod implements ModInitializer {
 		ModCommands.init();
 		ModItems.init();
 		ModEntities.init();
+		Curses.init();
 		LOGGER.info("Hello Fabric world!");
 	}
 }

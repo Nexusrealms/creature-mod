@@ -25,7 +25,7 @@ public class CurseComponent implements AutoSyncedComponent, ServerTickingCompone
     @Override
     public void readFromNbt(NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
         NbtList list = nbtCompound.getList("curses", NbtElement.LIST_TYPE);
-        instances =  list.stream().map(nbtElement -> CurseInstance.CODEC.parse(NbtOps.INSTANCE, nbtElement)).filter(DataResult::isSuccess).map(DataResult::getOrThrow).toList();
+        instances =  list.stream().map(nbtElement -> CurseInstance.CODEC.parse(NbtOps.INSTANCE, nbtElement)).filter(DataResult::isSuccess).map(DataResult::getOrThrow).collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override
