@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 
 public class ModEntities {
     public static final EntityType<BearEntity> BEAR = createWithSpawnEgg("bear", EntityType.Builder.create(BearEntity::new, SpawnGroup.CREATURE)
-            .dimensions(1.2f, 1f).build(), 0xFFFFFF, 0x000000, BearEntity::getDefaultAttributes);
+            .dimensions(1.2f, 1f).build(), 0xb77635, 0x63401c, BearEntity::getDefaultAttributes);
     public static final EntityType<WerewolfEntity> WEREWOLF = createWithSpawnEgg("werewolf", EntityType.Builder.create(WerewolfEntity::new, SpawnGroup.CREATURE)
             .dimensions(1.2f, 1f).build(), 0xFFFFFF, 0x000000, WerewolfEntity::getDefaultAttributes);
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,

@@ -1,12 +1,11 @@
 package de.nexusrealms.creaturemod.entities;
 
 import de.nexusrealms.creaturemod.CreatureMod;
-import de.nexusrealms.creaturemod.curses.Curse;
-import de.nexusrealms.creaturemod.curses.CurseInstance;
-import de.nexusrealms.creaturemod.curses.Curses;
-import de.nexusrealms.creaturemod.curses.TherianthropyCurse;
+import de.nexusrealms.creaturemod.ModEntityComponents;
+import de.nexusrealms.creaturemod.curses.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Ownable;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.mob.HostileEntity;
@@ -57,7 +56,7 @@ public abstract class TherianthropeEntity extends HostileEntity implements Ownab
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
-    public abstract Curse getCurseType();
+    public abstract TherianthropyCurse<?> getCurseType();
     public abstract CurseInstance createCurseInstance();
 
     ///The closer to zero, the more likely
@@ -71,5 +70,18 @@ public abstract class TherianthropeEntity extends HostileEntity implements Ownab
             }
         }
         return super.tryAttack(target);
+    }
+
+    @Override
+    public boolean isPersistent() {
+        return true;
+    }
+
+    @Override
+    protected void onKilledBy(@Nullable LivingEntity adversary) {
+        super.onKilledBy(adversary);
+        if(getWorld() instanceof ServerWorld world && ModEntityComponents.THERIANTHROPY.getNullable(this) instanceof TherianthropyComponent component && component.getUuid().isPresent()){
+            getCurseType().transformFrom((ServerPlayerEntity) world.getPlayerByUuid(component.getUuid().get()));
+        }
     }
 }

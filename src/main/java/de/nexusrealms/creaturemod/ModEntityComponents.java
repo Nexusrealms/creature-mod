@@ -18,7 +18,6 @@ public class ModEntityComponents implements EntityComponentInitializer {
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry entityComponentFactoryRegistry) {
         entityComponentFactoryRegistry.registerFor(LivingEntity.class, CURSES, CurseComponent::new);
-        entityComponentFactoryRegistry.registerForPlayers(THERIANTHROPY, player -> new TherianthropyComponent(), RespawnCopyStrategy.NEVER_COPY);
-
+        entityComponentFactoryRegistry.registerFor(LivingEntity.class, THERIANTHROPY, living -> new TherianthropyComponent());
     }
 }

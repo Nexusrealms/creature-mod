@@ -26,8 +26,11 @@ public class TherianthropyCurse<T extends TherianthropeEntity> extends Curse {
         if(entity == null) return;
         entity.refreshPositionAndAngles(player.getPos(), player.getYaw(), player.getPitch());
         player.changeGameMode(GameMode.SPECTATOR);
-        player.setCameraEntity(entity);
         player.getServerWorld().spawnEntity(entity);
+        player.setCameraEntity(entity);
+        ModEntityComponents.THERIANTHROPY.maybeGet(player).ifPresent(therianthropyComponent -> therianthropyComponent.setEntity(entity));
+        ModEntityComponents.THERIANTHROPY.maybeGet(entity).ifPresent(therianthropyComponent -> therianthropyComponent.setEntity(player));
+
     }
     public void transformFrom(ServerPlayerEntity player){
         Optional<TherianthropyComponent> component = ModEntityComponents.THERIANTHROPY.maybeGet(player);
@@ -36,6 +39,8 @@ public class TherianthropyCurse<T extends TherianthropeEntity> extends Curse {
             if(optional.isPresent()){
                 Entity entity = player.getServerWorld().getEntity(optional.get());
                 player.setCameraEntity(player);
+                player.changeGameMode(GameMode.SURVIVAL);
+                component.get().setEntity(null);
                 if(entity != null){
                     entity.discard();
                 } else {

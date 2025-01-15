@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.CurseInstance;
 import de.nexusrealms.creaturemod.curses.Curses;
+import de.nexusrealms.creaturemod.curses.TherianthropyCurse;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.RegistryEntryArgumentType;
@@ -13,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
 import java.util.Collection;
@@ -73,6 +75,19 @@ public class ModCommands {
                                         }
                                         return 1;
                                     }))));
+            //TODO Remove in non debug situations
+            commandDispatcher.register(literal("therianthropyon")
+                    .requires(ServerCommandSource::isExecutedByPlayer)
+                    .executes(commandContext -> {
+                        Curses.LYCANTHROPY.transformTo(commandContext.getSource().getPlayer());
+                        return 1;
+                    }));
+            commandDispatcher.register(literal("therianthropyoff")
+                    .requires(ServerCommandSource::isExecutedByPlayer)
+                    .executes(commandContext -> {
+                        Curses.LYCANTHROPY.transformFrom(commandContext.getSource().getPlayer());
+                        return 1;
+                    }));
         });
     }
 }

@@ -31,14 +31,14 @@ public class WerewolfEntity extends TherianthropeEntity implements GeoEntity {
         super(entityType, world);
     }
     public static DefaultAttributeContainer getDefaultAttributes(){
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.40000001192092896).build();
 
     }
 
     @Override
-    public Curse getCurseType() {
+    public TherianthropyCurse<?> getCurseType() {
         return Curses.LYCANTHROPY;
     }
 
