@@ -1,0 +1,42 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  MOD_ID: "creature-mod"
+  JDK: "21"
+
+build-job:
+  stage: build
+  image: gradle:jdk${JDK}
+  script:
+    - ./gradlew properties
+    - export MOD_VERSION=$(grep "^mod_version=" gradle.properties | cut -d "=" -f2-)
+    - export MINECRAFT_VERSION=$(grep "^minecraft_version=" gradle.properties | cut -d "=" -f2-)
+    - echo "MOD_VERSION=${MOD_VERSION}" > build.env
+    - echo "MINECRAFT_VERSION=${MINECRAFT_VERSION}" >> build.env
+    - ./gradlew build
+  artifacts:
+    reports:
+      dotenv: build.env
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 month
+
+
+test-job:
+  stage: test
+  image: gradle:jdk${JDK}
+  script:
+    - ./gradlew test
+
+deploy-job:
+  stage: deploy
+  image: gradle:jdk${JDK}
+  script:
+    - mkdir -p mods
+    - cp build/libs/*.jar mods/
+    - echo "Mod built and deployed to mods folder"
+  only:
+    - main
