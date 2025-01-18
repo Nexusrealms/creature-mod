@@ -19,6 +19,7 @@ public class CreatureModClient implements ClientModInitializer {
     private void initEntityRenderers(){
         registerSimpleEntityRenderer(ModEntities.BEAR);
         registerSimpleEntityRenderer(ModEntities.WEREWOLF);
+        registerSimpleEntityRenderer(ModEntities.WEREBEAR);
     }
     private <T extends Entity & GeoEntity> void registerSimpleEntityRenderer(EntityType<T> entityType){
         EntityRendererRegistry.register(entityType, ctx -> new SimpleGeoEntityRenderer<>(ctx, () -> Registries.ENTITY_TYPE.getId(entityType).getPath(), SingleVariantGeoEntityModel::new));

@@ -23,6 +23,8 @@ public class ModEntities {
             .dimensions(1.2f, 1f).build(), 0xb77635, 0x63401c, BearEntity::getDefaultAttributes);
     public static final EntityType<WerewolfEntity> WEREWOLF = createWithSpawnEgg("werewolf", EntityType.Builder.create(WerewolfEntity::new, SpawnGroup.CREATURE)
             .dimensions(1.2f, 1f).build(), 0xFFFFFF, 0x000000, WerewolfEntity::getDefaultAttributes);
+    public static final EntityType<WerebearEntity> WEREBEAR = createWithSpawnEgg("werebear", EntityType.Builder.create(WerebearEntity::new, SpawnGroup.CREATURE)
+            .dimensions(1.2f, 1f).build(), 0xb77635, 0x000000, WerebearEntity::getDefaultAttributes);
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,
                                                                          int primaryColor,

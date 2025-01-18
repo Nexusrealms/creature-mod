@@ -33,13 +33,13 @@ public class ModCommands {
                                                     .then(argument("shouldTick", BoolArgumentType.bool())
                                                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4))
                                                             .executes(context -> {
-                                                                Collection<? extends Entity> entities = EntityArgumentType.getEntities(context, "entites");
+                                                                Collection<? extends Entity> entities = EntityArgumentType.getEntities(context, "entities");
                                                                 for (Entity entity : entities) {
                                                                     if (entity instanceof LivingEntity living) {
                                                                         RegistryEntry.Reference<Curse> curse = RegistryEntryReferenceArgumentType.getRegistryEntry(context, "curse", ModRegistries.Keys.CURSES);
                                                                         CurseInstance curseInstance = new CurseInstance(curse, BoolArgumentType.getBool(context, "hidden"), BoolArgumentType.getBool(context, "shouldTick"));
                                                                         Curses.applyCurse(curseInstance, living);
-                                                                        context.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.curse.apply", curse.registryKey().getValue()).append(living.getName()), false);
+                                                                        context.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.curse.apply", curse.registryKey().getValue(), living.getName()), false);
                                                                     } else {
                                                                         context.getSource().sendError(Text.translatable("message.creature-mod.curse.nonliving"));
                                                                     }
@@ -51,7 +51,7 @@ public class ModCommands {
                                     .then(argument("curse", RegistryKeyArgumentType.registryKey(ModRegistries.Keys.CURSES))
                                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4))
                                             .executes(context -> {
-                                                Collection<? extends Entity> entities = EntityArgumentType.getEntities(context, "entites");
+                                                Collection<? extends Entity> entities = EntityArgumentType.getEntities(context, "entities");
                                                 for (Entity entity : entities) {
                                                     if (entity instanceof LivingEntity living) {
                                                         RegistryKey<Curse> curse = context.getArgument("curse", RegistryKey.class);
@@ -69,6 +69,9 @@ public class ModCommands {
                                     .executes(context -> {
                                         if(EntityArgumentType.getEntity(context, "entity") instanceof LivingEntity living){
                                             List<CurseInstance> curseInstances = Curses.getCurses(living);
+                                            if(curseInstances.isEmpty()){
+                                                context.getSource().sendError(Text.translatable("message.creature-mod.curse.none"));
+                                            }
                                             curseInstances.forEach(curseInstance -> context.getSource().sendFeedback(() -> Text.literal(curseInstance.getType().getIdAsString()), false));
                                         } else {
                                             context.getSource().sendError(Text.translatable("message.creature-mod.curse.nonliving"));
@@ -79,13 +82,13 @@ public class ModCommands {
             commandDispatcher.register(literal("therianthropyon")
                     .requires(ServerCommandSource::isExecutedByPlayer)
                     .executes(commandContext -> {
-                        Curses.LYCANTHROPY.transformTo(commandContext.getSource().getPlayer());
+                        Curses.URSANTHROPY.transformTo(commandContext.getSource().getPlayer());
                         return 1;
                     }));
             commandDispatcher.register(literal("therianthropyoff")
                     .requires(ServerCommandSource::isExecutedByPlayer)
                     .executes(commandContext -> {
-                        Curses.LYCANTHROPY.transformFrom(commandContext.getSource().getPlayer());
+                        Curses.URSANTHROPY.transformFrom(commandContext.getSource().getPlayer());
                         return 1;
                     }));
         });
