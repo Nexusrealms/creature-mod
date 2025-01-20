@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Curses {
-    public static final TherianthropyCurse<WerewolfEntity> LYCANTHROPY = create("lycanthropy", new TherianthropyCurse<>(ModEntities.WEREWOLF));
-    public static final TherianthropyCurse<WerebearEntity> URSANTHROPY = create("ursanthropy", new TherianthropyCurse<>(ModEntities.WEREBEAR));
+    public static final TherianthropyCurse<WerewolfEntity> LYCANTHROPY = create("lycanthropy", new TherianthropyCurse<>(ModEntities.WEREWOLF, 0));
+    public static final TherianthropyCurse<WerebearEntity> URSANTHROPY = create("ursanthropy", new TherianthropyCurse<>(ModEntities.WEREBEAR, 1));
 
     private static <T extends Curse> T create(String name, T curse){
         return Registry.register(ModRegistries.CURSES, CreatureMod.id(name), curse);

@@ -10,6 +10,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -79,5 +80,11 @@ public class WerebearEntity extends TherianthropeEntity implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+    @Override
+    public void onPlayerTransform(ServerPlayerEntity player) {
+        super.onPlayerTransform(player);
+        triggerAnim("Transforming", "Transform");
     }
 }
