@@ -82,13 +82,13 @@ public class ModCommands {
             commandDispatcher.register(literal("therianthropyon")
                     .requires(ServerCommandSource::isExecutedByPlayer)
                     .executes(commandContext -> {
-                        Curses.URSANTHROPY.transformTo(commandContext.getSource().getPlayer());
+                        TherianthropyCurse.transformPlayer(commandContext.getSource().getPlayer());
                         return 1;
                     }));
             commandDispatcher.register(literal("therianthropyoff")
                     .requires(ServerCommandSource::isExecutedByPlayer)
                     .executes(commandContext -> {
-                        Curses.URSANTHROPY.transformFrom(commandContext.getSource().getPlayer());
+                        TherianthropyCurse.untransformPlayer(commandContext.getSource().getPlayer());
                         return 1;
                     }));
         });

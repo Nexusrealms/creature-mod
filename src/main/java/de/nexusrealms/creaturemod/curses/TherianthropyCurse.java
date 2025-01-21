@@ -47,7 +47,7 @@ public class TherianthropyCurse<T extends TherianthropeEntity> extends Curse {
         entity.onPlayerTransform(player);
         return true;
     }
-    public void transformFrom(ServerPlayerEntity player){
+    public static void untransformPlayer(ServerPlayerEntity player){
         Optional<TherianthropyComponent> component = ModEntityComponents.THERIANTHROPY.maybeGet(player);
         if(component.isPresent()){
             Optional<UUID> optional = component.get().getUuid();

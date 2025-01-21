@@ -81,7 +81,7 @@ public abstract class TherianthropeEntity extends HostileEntity implements Ownab
     protected void onKilledBy(@Nullable LivingEntity adversary) {
         super.onKilledBy(adversary);
         if(getWorld() instanceof ServerWorld world && getOwner() != null){
-            getCurseType().transformFrom((ServerPlayerEntity) world.getPlayerByUuid(ownerId));
+            TherianthropyCurse.untransformPlayer((ServerPlayerEntity) world.getPlayerByUuid(ownerId));
         }
     }
     public void onPlayerTransform(ServerPlayerEntity player){
