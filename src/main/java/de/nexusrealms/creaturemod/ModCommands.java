@@ -7,7 +7,6 @@ import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.curses.TherianthropyCurse;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.RegistryEntryArgumentType;
 import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.command.argument.RegistryKeyArgumentType;
 import net.minecraft.entity.Entity;

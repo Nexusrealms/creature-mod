@@ -25,6 +25,8 @@ public class ModEntities {
             .dimensions(1.2f, 1f).build(), 0xFFFFFF, 0x000000, WerewolfEntity::getDefaultAttributes);
     public static final EntityType<WerebearEntity> WEREBEAR = createWithSpawnEgg("werebear", EntityType.Builder.create(WerebearEntity::new, SpawnGroup.CREATURE)
             .dimensions(1.2f, 1f).build(), 0xb77635, 0x000000, WerebearEntity::getDefaultAttributes);
+    public static final EntityType<WraithEntity> WRAITH = createWithSpawnEgg("wraith", EntityType.Builder.create(WraithEntity::new, SpawnGroup.MONSTER)
+            .dimensions(0.8f, 1.8f).build(), 0x000000, 0xFF0000, WraithEntity::getDefaultAttributes);
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,
                                                                          int primaryColor,
@@ -52,8 +54,4 @@ public class ModEntities {
         return Registry.register(Registries.ENTITY_TYPE, CreatureMod.id(name), entityType);
     }
     public static void init(){}
-    public static <T extends EntityType<E>, E extends Entity> RegistryEntry.Reference<T> entryOf(T value){
-        RegistryEntry.Reference<T> reference = (RegistryEntry.Reference<T>) Registries.ENTITY_TYPE.createEntry(value);
-        return reference;
-    }
 }
