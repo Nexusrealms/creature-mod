@@ -1,6 +1,7 @@
 package de.nexusrealms.creaturemod.entities;
 
 import de.nexusrealms.creaturemod.entities.brain.sensor.EntitiesAroundGuardedPositionSensor;
+import de.nexusrealms.creaturemod.entities.brain.task.TeleportHome;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -15,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -33,6 +35,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTar
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -60,7 +63,8 @@ public class WraithEntity extends PathAwareEntity implements SmartBrainOwner<Wra
     @Override
     public List<? extends ExtendedSensor<? extends WraithEntity>> getSensors() {
         return ObjectArrayList.of(
-                new EntitiesAroundGuardedPositionSensor<>(), // This tracks nearby entities
+                new NearbyLivingEntitySensor<>(), // This tracks nearby entities
+                new EntitiesAroundGuardedPositionSensor<>(),
                 new HurtBySensor<>());
     }
     @Override
@@ -85,7 +89,8 @@ public class WraithEntity extends PathAwareEntity implements SmartBrainOwner<Wra
     @Override
     public BrainActivityGroup<WraithEntity> getIdleTasks() { // These are the tasks that run when the mob isn't doing anything else (usually)
         return BrainActivityGroup.idleTasks(
-                new FirstApplicableBehaviour<>(      // Run only one of the below behaviours, trying each one in order. Include the generic type because JavaC is silly
+                new FirstApplicableBehaviour<>(// Run only one of the below behaviours, trying each one in order. Include the generic type because JavaC is silly
+                        new TeleportHome<>().cooldownFor(mobEntity -> 100),
                         new TargetOrRetaliate<>(),            // Set the attack target and walk target based on nearby entities
                         new SetPlayerLookTarget<>(),          // Set the look target for the nearest player
                         new SetRandomLookTarget<>()),         // Set a random look target

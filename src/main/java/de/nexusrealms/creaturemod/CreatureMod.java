@@ -3,6 +3,7 @@ package de.nexusrealms.creaturemod;
 import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.entities.ModEntities;
+import de.nexusrealms.creaturemod.entities.brain.memory.ModMemories;
 import de.nexusrealms.creaturemod.entities.brain.sensor.ModSensors;
 import de.nexusrealms.creaturemod.items.ModItems;
 import net.fabricmc.api.ModInitializer;
@@ -37,6 +38,7 @@ public class CreatureMod implements ModInitializer {
 
 		ModCommands.init();
 		ModItems.init();
+		ModMemories.init();
 		ModSensors.init();
 		ModEntities.init();
 		Curses.init();

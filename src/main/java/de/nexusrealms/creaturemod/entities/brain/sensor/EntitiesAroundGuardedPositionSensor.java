@@ -1,10 +1,14 @@
 package de.nexusrealms.creaturemod.entities.brain.sensor;
 
+import de.nexusrealms.creaturemod.CreatureMod;
+import de.nexusrealms.creaturemod.entities.brain.memory.ModMemories;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Unit;
 import net.minecraft.util.math.Box;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
@@ -23,6 +27,12 @@ public class EntitiesAroundGuardedPositionSensor<T extends LivingEntity> extends
     public SensorType<? extends ExtendedSensor<?>> type() {
         return ModSensors.ENTITES_AROUND_GUARDED_POSITION;
     }
+    private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemories.IS_HOME_THREATHENED);
+
+    @Override
+    public List<MemoryModuleType<?>> memoriesUsed() {
+        return MEMORIES;
+    }
 
     @Override
     protected void sense(ServerWorld level, T entity) {
@@ -35,9 +45,9 @@ public class EntitiesAroundGuardedPositionSensor<T extends LivingEntity> extends
 
             List<LivingEntity> entities = EntityRetrievalUtil.getEntities(entity.getWorld(), Box.from(globalPos.pos().toCenterPos()).expand(radius.xzRadius(), radius.yRadius(), radius.xzRadius()), LivingEntity.class, (target -> target != entity && predicate().test(target, entity)));
             Objects.requireNonNull(entity);
-            entities.sort(Comparator.comparingDouble(entity::squaredDistanceTo));
-            BrainUtils.setMemory(entity, MemoryModuleType.MOBS, entities);
-            BrainUtils.setMemory(entity, MemoryModuleType.VISIBLE_MOBS, new FixedNearestVisibleLivingEntities(entity, entities));
+            if(!entities.isEmpty()){
+                BrainUtils.setMemory(entity, ModMemories.IS_HOME_THREATHENED, Unit.INSTANCE);
+            }
         });
 
     }
