@@ -1,7 +1,10 @@
 package de.nexusrealms.creaturemod.entities;
 
+import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.entities.brain.sensor.EntitiesAroundGuardedPositionSensor;
 import de.nexusrealms.creaturemod.entities.brain.task.TeleportHome;
+import de.nexusrealms.creaturemod.util.EntityHolder;
+import de.nexusrealms.creaturemod.util.PersistentOptionalEntityHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -13,6 +16,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -36,6 +41,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliat
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
+import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -50,7 +56,6 @@ public class WraithEntity extends PathAwareEntity implements SmartBrainOwner<Wra
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("Idle");
     protected static final RawAnimation FLY = RawAnimation.begin().thenLoop("Fly");
-
     protected WraithEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -67,6 +72,7 @@ public class WraithEntity extends PathAwareEntity implements SmartBrainOwner<Wra
                 new EntitiesAroundGuardedPositionSensor<>(),
                 new HurtBySensor<>());
     }
+
     @Override
     protected Brain.Profile<?> createBrainProfile() {
         return new SmartBrainProvider<>(this);
