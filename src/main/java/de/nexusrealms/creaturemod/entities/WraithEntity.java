@@ -3,8 +3,6 @@ package de.nexusrealms.creaturemod.entities;
 import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.entities.brain.sensor.EntitiesAroundGuardedPositionSensor;
 import de.nexusrealms.creaturemod.entities.brain.task.TeleportHome;
-import de.nexusrealms.creaturemod.util.EntityHolder;
-import de.nexusrealms.creaturemod.util.PersistentOptionalEntityHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
