@@ -23,6 +23,9 @@
 		],
 		"cardinal-components-entity": [
 			"de.nexusrealms.creaturemod.ModEntityComponents"
+		],
+		"fabric-datagen": [
+			"de.nexusrealms.creaturemod.datagen.CreatureModDatagen"
 		]
 	},
 	"mixins": [

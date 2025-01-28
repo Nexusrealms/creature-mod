@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "creature-mod:block/garlic_stage5"
+  }
+}

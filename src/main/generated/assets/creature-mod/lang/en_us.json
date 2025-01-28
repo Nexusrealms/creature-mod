@@ -1,0 +1,16 @@
+{
+  "entity.creature-mod.bear": "Bear",
+  "entity.creature-mod.werebear": "Werebear",
+  "entity.creature-mod.werewolf": "Werewolf",
+  "entity.creature-mod.wraith": "Wraith",
+  "item.creature-mod.bear_spawn_egg": "Bear Spawn Egg",
+  "item.creature-mod.garlic_bulb": "Garlic Bulb",
+  "item.creature-mod.garlic_clove": "Garlic Clove",
+  "item.creature-mod.werebear_spawn_egg": "Werebear Spawn Egg",
+  "item.creature-mod.werewolf_spawn_egg": "Werewolf Spawn Egg",
+  "item.creature-mod.wraith_spawn_egg": "Wraith Spawn Egg",
+  "message.creature-mod.curse.apply": "The curse %s has been applied to %s!",
+  "message.creature-mod.curse.none": "%s has no curses!",
+  "message.creature-mod.curse.nonliving": "Curses can't be applied to non-living entities!",
+  "message.creature-mod.curse.remove": "The curse %s has been removed from "
+}

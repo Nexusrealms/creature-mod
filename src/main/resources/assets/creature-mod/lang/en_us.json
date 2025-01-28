@@ -1,6 +1,0 @@
-{
-  "message.creature-mod.curse.apply" : "Applied curse %s to %s",
-  "message.creature-mod.curse.nonliving": "Non-living entities cannot hold curses",
-  "message.creature-mod.curse.remove": "Removed curses of type %s from ",
-  "message.creature-mod.curse.none" : "This entity has no curses"
-}
