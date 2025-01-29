@@ -36,7 +36,10 @@ repositories {
 		url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
 	}
 	maven { url 'https://maven.blamejared.com' }
-
+	maven {
+		name = 'BlameJared Maven (CrT / Bookshelf)'
+		url = 'https://maven.blamejared.com'
+	}
 }
 
 dependencies {
@@ -53,6 +56,9 @@ dependencies {
 	modImplementation include ("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
 	modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
 	modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${project.minecraft_version}:${project.sbl_version}"
+	modImplementation("foundry.veil:veil-fabric-${project.minecraft_version}:${project.veil_version}") {
+		exclude group: "maven.modrinth"
+	}
 }
 
 processResources {

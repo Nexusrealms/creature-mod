@@ -1,0 +1,21 @@
+{
+  "render_style": "CUBE",
+  "init_modules": [
+  ],
+  "update_modules": [
+  ],
+  "collision_modules": [
+  ],
+  "forces": [
+  ],
+  "render_modules": [
+    "creature-mod:color/wraith_square_color"
+  ],
+  "face_velocity": true,
+  "velocity_stretch_factor": 0.0,
+  "should_collide": false
+}
+
+
+
+

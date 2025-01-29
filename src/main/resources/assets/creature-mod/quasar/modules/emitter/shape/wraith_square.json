@@ -1,0 +1,12 @@
+{
+  "shape": "veil:cylinder",
+  "dimensions": [
+    16, 0, 16
+  ],
+  "rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "from_surface": false
+}

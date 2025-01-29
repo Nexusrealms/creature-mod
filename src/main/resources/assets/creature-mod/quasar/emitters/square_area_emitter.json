@@ -1,0 +1,11 @@
+{
+  "max_lifetime": 40,
+  "loop": false,
+  "rate": 1,
+  "count": 16,
+  "emitter_settings": {
+    "shape": "creature-mod:wraith_square",
+    "particle_settings": "creature-mod:wraith_square"
+  },
+  "particle_data": "creature-mod:wraith_square"
+}
