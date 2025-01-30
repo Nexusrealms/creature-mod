@@ -94,7 +94,7 @@ public class WraithEntity extends PathAwareEntity implements SmartBrainOwner<Wra
     public BrainActivityGroup<WraithEntity> getIdleTasks() { // These are the tasks that run when the mob isn't doing anything else (usually)
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour<>(// Run only one of the below behaviours, trying each one in order. Include the generic type because JavaC is silly
-                        new TeleportHome<>().cooldownFor(mobEntity -> 100),
+                        new TeleportHome<>(CreatureMod.id("wraith_square")).cooldownFor(mobEntity -> 100),
                         new TargetOrRetaliate<>(),            // Set the attack target and walk target based on nearby entities
                         new SetPlayerLookTarget<>(),          // Set the look target for the nearest player
                         new SetRandomLookTarget<>()),         // Set a random look target
