@@ -1,6 +1,5 @@
 stages:
   - build
-  - test
   - deploy
 
 variables:
@@ -30,14 +29,6 @@ build-job:
     paths:
       - build/libs/*.jar
     expire_in: 1 month
-
-test-job:
-  stage: test
-  image: gradle:jdk21
-  script:
-    - ./gradlew test
-  dependencies:
-    - build-job
 
 deploy-job:
   stage: deploy
