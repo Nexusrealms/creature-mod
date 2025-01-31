@@ -14,8 +14,12 @@ build-job:
     - ./gradlew properties
     - export MOD_VERSION=$(grep "^mod_version=" gradle.properties | cut -d "=" -f2-)
     - export MINECRAFT_VERSION=$(grep "^minecraft_version=" gradle.properties | cut -d "=" -f2-)
+    - pwd
+    - ls -l
     - echo "MOD_VERSION=${MOD_VERSION}" > build.env
     - echo "MINECRAFT_VERSION=${MINECRAFT_VERSION}" >> build.env
+    - ls -l build.env
+    - cat build.env
     - ./gradlew build
   artifacts:
     reports:
@@ -23,7 +27,6 @@ build-job:
     paths:
       - build/libs/*.jar
     expire_in: 1 month
-
 
 test-job:
   stage: test
