@@ -1,3 +1,12 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  MOD_ID: "creature-mod"
+  JDK: "21"
+
 build-job:
   stage: build
   image: gradle:jdk21
@@ -8,7 +17,8 @@ build-job:
     - export MINECRAFT_VERSION=$(grep "^minecraft_version=" gradle.properties | cut -d "=" -f2-) || echo "MINECRAFT_VERSION not found"
     
     # Create build.env if versions are available
-    - if [ -n "$MOD_VERSION" ] && [ -n "$MINECRAFT_VERSION" ]; then
+    - |
+      if [ -n "$MOD_VERSION" ] && [ -n "$MINECRAFT_VERSION" ]; then
         echo "Creating build.env..."
         echo "MOD_VERSION=${MOD_VERSION}" > build.env
         echo "MINECRAFT_VERSION=${MINECRAFT_VERSION}" >> build.env
@@ -19,7 +29,7 @@ build-job:
     paths:
       - build/libs/*.jar
     expire_in: 1 month
-    
+
 test-job:
   stage: test
   image: gradle:jdk21
