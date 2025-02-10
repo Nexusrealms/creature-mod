@@ -1,39 +1,38 @@
 stages:
   - build
-  - test
   - deploy
 
 variables:
-  MOD_ID: "creature-mod"
-  JDK: "21"
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+  GRADLE_BUILD_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+  GRADLE_TIMEOUT: 300000  # 5 minutes
 
 build-job:
   stage: build
-  image: gradle:jdk${JDK}
+  image: gradle:jdk21
   script:
-    - ./gradlew properties
-    - export MOD_VERSION=$(grep "^mod_version=" gradle.properties | cut -d "=" -f2-)
-    - export MINECRAFT_VERSION=$(grep "^minecraft_version=" gradle.properties | cut -d "=" -f2-)
-    - echo "MOD_VERSION=${MOD_VERSION}" > build.env
-    - echo "MINECRAFT_VERSION=${MINECRAFT_VERSION}" >> build.env
-    - ./gradlew build
+    - chmod +x ./gradlew
+    - ./gradlew --no-daemon --info --stacktrace --parallel properties
+    - export MOD_VERSION=$(grep "^mod_version=" gradle.properties | cut -d "=" -f2-) || echo "MOD_VERSION not found"
+    - export MINECRAFT_VERSION=$(grep "^minecraft_version=" gradle.properties | cut -d "=" -f2-) || echo "MINECRAFT_VERSION not found"
+    
+    # Create build.env if versions are available
+    - |
+      if [ -n "$MOD_VERSION" ] && [ -n "$MINECRAFT_VERSION" ]; then
+        echo "Creating build.env..."
+        echo "MOD_VERSION=${MOD_VERSION}" > build.env
+        echo "MINECRAFT_VERSION=${MINECRAFT_VERSION}" >> build.env
+      fi
+    
+    - ./gradlew --no-daemon --info --stacktrace --parallel build
   artifacts:
-    reports:
-      dotenv: build.env
     paths:
       - build/libs/*.jar
     expire_in: 1 month
 
-
-test-job:
-  stage: test
-  image: gradle:jdk${JDK}
-  script:
-    - ./gradlew test
-
 deploy-job:
   stage: deploy
-  image: gradle:jdk${JDK}
+  image: gradle:jdk21
   script:
     - mkdir -p mods
     - cp build/libs/*.jar mods/
