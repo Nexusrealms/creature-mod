@@ -2,6 +2,7 @@ package de.nexusrealms.creaturemod.entities.brain.task;
 
 import com.mojang.datafixers.util.Pair;
 import de.nexusrealms.creaturemod.entities.brain.memory.ModMemories;
+import de.nexusrealms.creaturemod.util.CreatureModBrainUtils;
 import foundry.veil.api.client.render.VeilRenderSystem;
 import foundry.veil.api.quasar.particle.ParticleEmitter;
 import foundry.veil.api.quasar.particle.ParticleSystemManager;
@@ -33,9 +34,8 @@ public class TeleportHome<E extends MobEntity> extends ExtendedBehaviour<E> {
         this.identifier = Optional.empty();
     }
     protected boolean doStartCheck(ServerWorld level, E entity, long gameTime) {
-        return (BrainUtils.hasMemory(entity, MemoryModuleType.HOME)
+        return (CreatureModBrainUtils.hasMemoryConditional(entity, MemoryModuleType.HOME, memory -> memory.pos().isWithinDistance(entity.getPos(), entity.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)))
                 && BrainUtils.hasMemory(entity, ModMemories.IS_HOME_THREATHENED)
-                && !BrainUtils.getMemory(entity, MemoryModuleType.HOME).pos().isWithinDistance(entity.getPos(), entity.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE))
                 && super.doStartCheck(level, entity, gameTime));
     }
     @Override

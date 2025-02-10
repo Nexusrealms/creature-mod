@@ -1,8 +1,10 @@
 {
+  "entity.creature-mod.air_elemental": "Air Elemental",
   "entity.creature-mod.bear": "Bear",
   "entity.creature-mod.werebear": "Werebear",
   "entity.creature-mod.werewolf": "Werewolf",
   "entity.creature-mod.wraith": "Wraith",
+  "item.creature-mod.air_elemental_spawn_egg": "Air Elemental Spawn Egg",
   "item.creature-mod.bear_spawn_egg": "Bear Spawn Egg",
   "item.creature-mod.garlic_bulb": "Garlic Bulb",
   "item.creature-mod.garlic_clove": "Garlic Clove",

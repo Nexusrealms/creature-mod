@@ -27,6 +27,8 @@ public class ModEntities {
             .dimensions(1.2f, 1f).build(), 0xb77635, 0x000000, WerebearEntity::getDefaultAttributes);
     public static final EntityType<WraithEntity> WRAITH = createWithSpawnEgg("wraith", EntityType.Builder.create(WraithEntity::new, SpawnGroup.MONSTER)
             .dimensions(0.8f, 1.8f).build(), 0x000000, 0xFF0000, WraithEntity::getDefaultAttributes);
+    public static final EntityType<AirElementalEntity> AIR_ELEMENTAL = createWithSpawnEgg("air_elemental", EntityType.Builder.create(AirElementalEntity::new, SpawnGroup.MONSTER)
+            .dimensions(1.2f, 1.2f).build(), 0xFFFFFF, 0xFFFFF0, AirElementalEntity::getDefaultAttributes);
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,
                                                                          int primaryColor,

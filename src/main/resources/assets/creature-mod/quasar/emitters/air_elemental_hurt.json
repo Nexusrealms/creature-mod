@@ -1,0 +1,75 @@
+{
+	"max_lifetime": 10,
+	"loop": false,
+	"rate": 1,
+	"count": 12,
+	"emitter_settings": {
+		"shape": {
+			"shape": "veil:sphere",
+			"dimensions": [
+				2,
+				2,
+				2
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"from_surface": false
+		},
+		"particle_settings": {
+  "random_speed": false,
+  "random_size": true,
+  "random_lifetime": true,
+  "initial_direction": [
+    0.1,
+    0.1,
+    0.1
+    ],
+  "random_initial_direction": true,
+  "random_initial_rotation": true,
+  "particle_size_variation": 0.0075,
+  "particle_lifetime": 40,
+  "particle_lifetime_variation": 5,
+  "particle_speed": 0.05,
+  "base_particle_size": 0.06
+},
+		"force_spawn": true
+	},
+	"particle_data": "creature-mod:air_elemental_hurt"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
