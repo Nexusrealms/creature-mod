@@ -2,7 +2,6 @@ package de.nexusrealms.creaturemod.curses;
 
 import com.mojang.serialization.DataResult;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;

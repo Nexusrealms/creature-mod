@@ -7,6 +7,7 @@ import de.nexusrealms.creaturemod.entities.ModEntities;
 import de.nexusrealms.creaturemod.entities.brain.memory.ModMemories;
 import de.nexusrealms.creaturemod.entities.brain.sensor.ModSensors;
 import de.nexusrealms.creaturemod.items.ModItems;
+import de.nexusrealms.creaturemod.magic.element.Elements;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.util.Identifier;
@@ -44,6 +45,7 @@ public class CreatureMod implements ModInitializer {
 		ModSensors.init();
 		ModEntities.init();
 		Curses.init();
+		Elements.init();
 		LOGGER.info("Hello Fabric world!");
 	}
 }

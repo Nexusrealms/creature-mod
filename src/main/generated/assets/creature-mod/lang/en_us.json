@@ -14,5 +14,6 @@
   "message.creature-mod.curse.apply": "The curse %s has been applied to %s!",
   "message.creature-mod.curse.none": "%s has no curses!",
   "message.creature-mod.curse.nonliving": "Curses can't be applied to non-living entities!",
-  "message.creature-mod.curse.remove": "The curse %s has been removed from "
+  "message.creature-mod.curse.remove": "The curse %s has been removed from ",
+  "message.creature-mod.flow.add": "Flow of element %s of value %s has been added to %s players"
 }

@@ -47,5 +47,6 @@ public class LangProvider extends FabricLanguageProvider {
         translationBuilder.add("message.creature-mod.curse.nonliving", "Curses can't be applied to non-living entities!");
         translationBuilder.add("message.creature-mod.curse.none", "%s has no curses!");
         translationBuilder.add("message.creature-mod.curse.apply", "The curse %s has been applied to %s!");
+        translationBuilder.add("message.creature-mod.flow.add", "Flow of element %s of value %s has been added to %s players");
     }
 }

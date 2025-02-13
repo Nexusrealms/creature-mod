@@ -22,7 +22,7 @@
 			"de.nexusrealms.creaturemod.client.CreatureModClient"
 		],
 		"cardinal-components-entity": [
-			"de.nexusrealms.creaturemod.ModEntityComponents"
+          "de.nexusrealms.creaturemod.ModEntityComponents"
 		],
 		"fabric-datagen": [
 			"de.nexusrealms.creaturemod.datagen.CreatureModDatagen"
@@ -43,7 +43,8 @@
 	"custom": {
 		"cardinal-components": [
 			"creature-mod:curses",
-			"creature-mod:therianthropy"
+			"creature-mod:therianthropy",
+			"creature-mod:player_flow_storage"
 
 		]
 	}
