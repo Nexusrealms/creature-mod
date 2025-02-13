@@ -10,5 +10,6 @@ public class CreatureModDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(LangProvider::new);
         pack.addProvider(ModelProvider::new);
         pack.addProvider(BlockLootTableProvider::new);
+        pack.addProvider(RecipeProvider::new);
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "creature-mod:garlic_bulb"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "creature-mod:garlic_clove"
+  }
+}
