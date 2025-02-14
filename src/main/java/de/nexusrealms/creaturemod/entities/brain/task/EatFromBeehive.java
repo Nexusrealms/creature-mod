@@ -24,6 +24,11 @@ public class EatFromBeehive extends ExtendedBehaviour<BearEntity> {
     }
 
     @Override
+    protected boolean doStartCheck(ServerWorld level, BearEntity entity, long gameTime) {
+        return super.doStartCheck(level, entity, gameTime) && entity.isInEatingRange(BrainUtils.getMemory(entity, ModMemories.TARGET_BEEHIVE));
+    }
+
+    @Override
     protected void start(BearEntity entity) {
         BlockPos target = BrainUtils.getMemory(entity, ModMemories.TARGET_BEEHIVE);
         entity.eatHoneyAtPos(target);

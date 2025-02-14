@@ -214,7 +214,9 @@ public class BearEntity extends AnimalEntity implements SmartBrainOwner<BearEnti
     public Set<Activity> getScheduleIgnoringActivities() {
         return ObjectArraySet.of(Activity.FIGHT, ModActivities.EAT_HONEY);
     }
-
+    public boolean isInEatingRange(BlockPos pos){
+        return getBoundingBox().expand(1).contains(pos.toCenterPos());
+    }
     @Override
     public BrainActivityGroup<BearEntity> getFightTasks() { // These are the tasks that handle fighting
         return BrainActivityGroup.fightTasks(
