@@ -1,8 +1,6 @@
-package de.nexusrealms.creaturemod.entities;
+package de.nexusrealms.creaturemod.entities.therianthrope;
 
-import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.ModRegistries;
-import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.CurseInstance;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.curses.TherianthropyCurse;

@@ -3,6 +3,7 @@ package de.nexusrealms.creaturemod.entities.brain.memory;
 import com.mojang.serialization.Codec;
 import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.entities.brain.sensor.EntitiesAroundGuardedPositionSensor;
+import net.minecraft.block.BlockKeys;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
@@ -10,11 +11,15 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Unit;
 import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.Optional;
 
 public class ModMemories {
     public static final MemoryModuleType<Unit> IS_HOME_THREATHENED = create("is_home_threathened", Unit.CODEC);
+    public static final MemoryModuleType<Unit> FULL = create("full", Unit.CODEC);
+    public static final MemoryModuleType<BlockPos> TARGET_BEEHIVE = create("target_beehive", BlockPos.CODEC);
+
 
     private static <T> MemoryModuleType<T> create(String name, Codec<T> codec){
         return Registry.register(Registries.MEMORY_MODULE_TYPE, CreatureMod.id(name), new MemoryModuleType<>(Optional.of(codec)));

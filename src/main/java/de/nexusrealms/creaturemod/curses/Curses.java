@@ -4,8 +4,8 @@ import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.ModEntityComponents;
 import de.nexusrealms.creaturemod.ModRegistries;
 import de.nexusrealms.creaturemod.entities.ModEntities;
-import de.nexusrealms.creaturemod.entities.WerebearEntity;
-import de.nexusrealms.creaturemod.entities.WerewolfEntity;
+import de.nexusrealms.creaturemod.entities.therianthrope.WerebearEntity;
+import de.nexusrealms.creaturemod.entities.therianthrope.WerewolfEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.registry.Registry;
 

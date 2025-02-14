@@ -1,6 +1,11 @@
 package de.nexusrealms.creaturemod.entities;
 
 import de.nexusrealms.creaturemod.CreatureMod;
+import de.nexusrealms.creaturemod.entities.elemental.AirElementalEntity;
+import de.nexusrealms.creaturemod.entities.natural.BearEntity;
+import de.nexusrealms.creaturemod.entities.spectral.WraithEntity;
+import de.nexusrealms.creaturemod.entities.therianthrope.WerebearEntity;
+import de.nexusrealms.creaturemod.entities.therianthrope.WerewolfEntity;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
@@ -14,7 +19,6 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
 
 import java.util.function.Supplier;
 

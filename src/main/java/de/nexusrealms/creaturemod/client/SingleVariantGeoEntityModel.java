@@ -1,11 +1,7 @@
 package de.nexusrealms.creaturemod.client;
 
 import de.nexusrealms.creaturemod.CreatureMod;
-import de.nexusrealms.creaturemod.entities.WerewolfEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.model.GeoModel;

@@ -2,7 +2,7 @@ package de.nexusrealms.creaturemod.curses;
 
 import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.ModEntityComponents;
-import de.nexusrealms.creaturemod.entities.TherianthropeEntity;
+import de.nexusrealms.creaturemod.entities.therianthrope.TherianthropeEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;

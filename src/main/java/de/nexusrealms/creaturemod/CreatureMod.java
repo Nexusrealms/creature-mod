@@ -4,6 +4,7 @@ import de.nexusrealms.creaturemod.blocks.ModBlocks;
 import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.entities.ModEntities;
+import de.nexusrealms.creaturemod.entities.brain.ModActivities;
 import de.nexusrealms.creaturemod.entities.brain.memory.ModMemories;
 import de.nexusrealms.creaturemod.entities.brain.sensor.ModSensors;
 import de.nexusrealms.creaturemod.items.ModItems;
@@ -41,6 +42,7 @@ public class CreatureMod implements ModInitializer {
 		ModCommands.init();
 		ModBlocks.init();
 		ModItems.init();
+		ModActivities.init();
 		ModMemories.init();
 		ModSensors.init();
 		ModEntities.init();
