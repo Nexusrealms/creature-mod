@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Unit;
 import net.minecraft.util.math.BlockPos;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import net.tslat.smartbrainlib.object.MemoryTest;
@@ -16,7 +17,7 @@ import net.tslat.smartbrainlib.util.BrainUtils;
 import java.util.List;
 
 public class EatFromBeehive extends ExtendedBehaviour<BearEntity> {
-    private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(1).hasMemory(ModMemories.TARGET_BEEHIVE);
+    private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(1).hasMemory(ModMemories.TARGET_BEEHIVE).usesMemory(ModMemories.FULL);
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryModuleState>> getMemoryRequirements() {
@@ -32,6 +33,7 @@ public class EatFromBeehive extends ExtendedBehaviour<BearEntity> {
     protected void start(BearEntity entity) {
         BlockPos target = BrainUtils.getMemory(entity, ModMemories.TARGET_BEEHIVE);
         entity.eatHoneyAtPos(target);
+        BrainUtils.setForgettableMemory(entity, ModMemories.FULL, Unit.INSTANCE, 1000);
         super.start(entity);
     }
 

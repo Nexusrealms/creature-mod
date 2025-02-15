@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FindHoney <E extends MobEntity> extends ExtendedBehaviour<E> {
-    private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(2).hasMemory(SBLMemoryTypes.NEARBY_BLOCKS.get()).usesMemory(ModMemories.TARGET_BEEHIVE);
+    private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3).noMemory(ModMemories.FULL).hasMemory(SBLMemoryTypes.NEARBY_BLOCKS.get()).usesMemory(ModMemories.TARGET_BEEHIVE);
     protected boolean doStartCheck(ServerWorld level, E entity, long gameTime) {
         return (!BrainUtils.hasMemory(entity, MemoryModuleType.ATTACK_TARGET) && super.doStartCheck(level, entity, gameTime)) && checkExtraStartConditions(level, entity);
     }

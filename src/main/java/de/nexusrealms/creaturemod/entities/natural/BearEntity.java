@@ -103,7 +103,8 @@ public class BearEntity extends AnimalEntity implements SmartBrainOwner<BearEnti
     public static DefaultAttributeContainer getDefaultAttributes(){
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000001192092896).build();
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000001192092896)
+                .add(EntityAttributes.GENERIC_WATER_MOVEMENT_EFFICIENCY, 1).build();
 
     }
 
@@ -180,7 +181,7 @@ public class BearEntity extends AnimalEntity implements SmartBrainOwner<BearEnti
     @Override
     public boolean onKilledOther(ServerWorld world, LivingEntity other) {
         if(other instanceof SalmonEntity){
-            BrainUtils.setForgettableMemory(this, ModMemories.FULL, Unit.INSTANCE, 100);
+            BrainUtils.setForgettableMemory(this, ModMemories.FULL, Unit.INSTANCE, 1000);
         }
         return super.onKilledOther(world, other);
     }
