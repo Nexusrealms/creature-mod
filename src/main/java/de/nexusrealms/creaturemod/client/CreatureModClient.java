@@ -1,7 +1,9 @@
 package de.nexusrealms.creaturemod.client;
 
 import de.nexusrealms.creaturemod.CreatureMod;
+import de.nexusrealms.creaturemod.client.render.entity.WaterElementalRenderer;
 import de.nexusrealms.creaturemod.entities.ModEntities;
+import de.nexusrealms.creaturemod.entities.elemental.WaterElementalEntity;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.EmptyEntityRenderer;
@@ -23,6 +25,8 @@ public class CreatureModClient implements ClientModInitializer {
         registerSimpleEntityRenderer(ModEntities.WEREBEAR);
         registerSimpleEntityRenderer(ModEntities.WRAITH);
         registerEmptyEntityRenderer(ModEntities.AIR_ELEMENTAL);
+        EntityRendererRegistry.register(ModEntities.WATER_ELEMENTAL,
+                ctx -> new WaterElementalRenderer<>(ctx, new SingleVariantGeoEntityModel<>("water_elemental")));
 
     }
     private <T extends Entity & GeoEntity> void registerSimpleEntityRenderer(EntityType<T> entityType){
