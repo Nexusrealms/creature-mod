@@ -1,6 +1,7 @@
 package de.nexusrealms.creaturemod.entities.therianthrope;
 
 import de.nexusrealms.creaturemod.CreatureMod;
+import de.nexusrealms.creaturemod.ModRegistries;
 import de.nexusrealms.creaturemod.curses.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -43,19 +44,10 @@ public abstract class TherianthropeEntity extends HostileEntity implements Ownab
             return null;
         }
     }
-    protected void initGoals() {
-        this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new FleeEntityGoal<>(this, ArmadilloEntity.class, 6.0F, 1.0, 1.2, (entity) -> !((ArmadilloEntity) entity).isNotIdle()));
-        this.goalSelector.add(2, new FleeEntityGoal<>(this, CowEntity.class, 6.0F, 0.5, 0.6, entity -> true));
-        this.goalSelector.add(5, new MeleeAttackGoal(this, 0.8 ,false));
-        this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(6, new LookAroundGoal(this));
-        this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
-    }
     public abstract TherianthropyCurse<?> getCurseType();
-    public abstract CurseInstance createCurseInstance();
+    public CurseInstance createCurseInstance() {
+        return new CurseInstance(ModRegistries.CURSES.getEntry(getCurseType()), false, false);
+    }
 
     ///The closer to zero, the more likely
     public abstract int infectionChance();

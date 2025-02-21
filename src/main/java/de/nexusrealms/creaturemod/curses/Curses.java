@@ -5,6 +5,7 @@ import de.nexusrealms.creaturemod.ModEntityComponents;
 import de.nexusrealms.creaturemod.ModRegistries;
 import de.nexusrealms.creaturemod.entities.ModEntities;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerebearEntity;
+import de.nexusrealms.creaturemod.entities.therianthrope.WerecatEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerewolfEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.registry.Registry;
@@ -15,6 +16,7 @@ import java.util.function.Predicate;
 public class Curses {
     public static final TherianthropyCurse<WerewolfEntity> LYCANTHROPY = create("lycanthropy", new TherianthropyCurse<>(ModEntities.WEREWOLF, 0));
     public static final TherianthropyCurse<WerebearEntity> URSANTHROPY = create("ursanthropy", new TherianthropyCurse<>(ModEntities.WEREBEAR, 1));
+    public static final TherianthropyCurse<WerecatEntity> AILURANTHROPY = create("ailuranthropy", new TherianthropyCurse<>(ModEntities.WERECAT, 1));
 
     private static <T extends Curse> T create(String name, T curse){
         return Registry.register(ModRegistries.CURSES, CreatureMod.id(name), curse);

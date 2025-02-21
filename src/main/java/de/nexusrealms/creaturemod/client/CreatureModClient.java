@@ -27,6 +27,7 @@ public class CreatureModClient implements ClientModInitializer {
         registerEmptyEntityRenderer(ModEntities.AIR_ELEMENTAL);
         EntityRendererRegistry.register(ModEntities.WATER_ELEMENTAL,
                 ctx -> new WaterElementalRenderer<>(ctx, new SingleVariantGeoEntityModel<>("water_elemental")));
+        registerSimpleEntityRenderer(ModEntities.WERECAT);
 
     }
     private <T extends Entity & GeoEntity> void registerSimpleEntityRenderer(EntityType<T> entityType){

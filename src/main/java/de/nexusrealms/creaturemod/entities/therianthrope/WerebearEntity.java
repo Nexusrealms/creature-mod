@@ -44,13 +44,10 @@ public class WerebearEntity extends TherianthropeEntity implements GeoEntity {
     }
 
     @Override
-    public CurseInstance createCurseInstance() {
-        return new CurseInstance(ModRegistries.CURSES.getEntry(getCurseType()), false, false);
-    }
-    @Override
     public int infectionChance() {
         return 0;
     }
+
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

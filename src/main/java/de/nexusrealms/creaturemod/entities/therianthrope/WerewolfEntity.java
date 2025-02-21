@@ -40,10 +40,7 @@ public class WerewolfEntity extends TherianthropeEntity implements GeoEntity {
         return Curses.LYCANTHROPY;
     }
 
-    @Override
-    public CurseInstance createCurseInstance() {
-        return new CurseInstance(ModRegistries.CURSES.getEntry(getCurseType()), false, false);
-    }
+
     @Override
     public int infectionChance() {
         return 0;
