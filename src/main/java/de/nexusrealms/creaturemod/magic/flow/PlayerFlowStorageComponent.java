@@ -53,12 +53,16 @@ public class PlayerFlowStorageComponent implements FlowStorage,  AutoSyncedCompo
     }
     public boolean drainFlow(FlowUnit flowUnit){
         //TODO Implement flow check and drain
-        return canDrain(flowUnit);
+        if(canDrain(flowUnit)){
+            getFlowInternal(flowUnit.getElement()).subtract(flowUnit.getValue());
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean canDrain(FlowUnit flowUnit) {
         //TODO Implement flow check and drain
-        return true;
+        return getFlow(flowUnit.getElement()).isEnoughFor(flowUnit);
     }
 }

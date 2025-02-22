@@ -49,6 +49,7 @@ public interface FlowCost {
         public boolean drain(FlowStorage flowStorage) {
             if(canDrain(flowStorage)){
                 list.forEach(flowCost -> flowCost.drain(flowStorage));
+                return true;
             }
             return false;
         }
@@ -65,7 +66,7 @@ public interface FlowCost {
 
         @Override
         public FlowCostType<?> getType() {
-            return FlowCostType.ALL;
+            return FlowCostType.ANY;
         }
 
         @Override
@@ -79,7 +80,7 @@ public interface FlowCost {
 
         @Override
         public boolean canDrain(FlowStorage flowStorage) {
-            return list.stream().anyMatch(flowCost -> flowCost.drain(flowStorage));
+            return list.stream().anyMatch(flowCost -> flowCost.canDrain(flowStorage));
         }
     }
 }

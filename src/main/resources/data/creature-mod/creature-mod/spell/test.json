@@ -1,10 +1,22 @@
 {
   "flowCost": {
-    "type": "creature-mod:simple",
-    "flowUnit": {
-      "element": "creature-mod:fire",
-      "value": 1
-    }
+    "type": "creature-mod:any",
+    "list": [
+      {
+        "type": "creature-mod:simple",
+        "flowUnit": {
+          "element": "creature-mod:fire",
+          "value": 1
+        }
+      },
+      {
+        "type": "creature-mod:simple",
+        "flowUnit": {
+          "element": "creature-mod:water",
+          "value": 10
+        }
+      }
+    ]
   },
   "action": {
     "type": "creature-mod:give_item",

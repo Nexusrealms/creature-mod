@@ -31,6 +31,9 @@ public interface FlowUnit{
 
     RegistryEntry<Element> getElement();
     int getValue();
+    default boolean isEnoughFor(FlowUnit other){
+        return getValue() >= other.getValue();
+    }
     static FlowUnit of(RegistryEntry<Element> element, int value){
         return new Immutable(element, value);
     }
