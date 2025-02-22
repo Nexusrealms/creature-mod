@@ -21,6 +21,5 @@ public class BlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        //TODO Add actual drops
     }
 }

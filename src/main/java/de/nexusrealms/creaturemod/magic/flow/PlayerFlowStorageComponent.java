@@ -52,7 +52,6 @@ public class PlayerFlowStorageComponent implements FlowStorage,  AutoSyncedCompo
         return FlowUnit.MAP_STORAGE_CODEC.encodeStart(JsonOps.INSTANCE, map).getOrThrow().toString();
     }
     public boolean drainFlow(FlowUnit flowUnit){
-        //TODO Implement flow check and drain
         if(canDrain(flowUnit)){
             getFlowInternal(flowUnit.getElement()).subtract(flowUnit.getValue());
             return true;
@@ -62,7 +61,6 @@ public class PlayerFlowStorageComponent implements FlowStorage,  AutoSyncedCompo
 
     @Override
     public boolean canDrain(FlowUnit flowUnit) {
-        //TODO Implement flow check and drain
         return getFlow(flowUnit.getElement()).isEnoughFor(flowUnit);
     }
 }
