@@ -20,6 +20,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.SalmonEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -145,7 +146,11 @@ public class WerecatEntity extends TherianthropeEntity implements SmartBrainOwne
         return Curses.AILURANTHROPY;
     }
 
-
+    @Override
+    public void onPlayerTransform(ServerPlayerEntity player) {
+        super.onPlayerTransform(player);
+        triggerAnim("Transforming", "Transform");
+    }
     @Override
     public int infectionChance() {
         return 0;
