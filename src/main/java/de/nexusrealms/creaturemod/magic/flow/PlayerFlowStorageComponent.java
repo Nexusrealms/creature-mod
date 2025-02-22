@@ -1,12 +1,11 @@
 package de.nexusrealms.creaturemod.magic.flow;
 
 import com.mojang.serialization.JsonOps;
-import de.nexusrealms.creaturemod.magic.MagicChecks;
+import de.nexusrealms.creaturemod.magic.MagicUtils;
 import de.nexusrealms.creaturemod.magic.element.Element;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -14,9 +13,7 @@ import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 import org.ladysnake.cca.api.v3.entity.RespawnableComponent;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Flow;
 
 public class PlayerFlowStorageComponent implements FlowStorage,  AutoSyncedComponent, ServerTickingComponent, RespawnableComponent<PlayerFlowStorageComponent> {
     private final PlayerEntity player;
@@ -46,7 +43,7 @@ public class PlayerFlowStorageComponent implements FlowStorage,  AutoSyncedCompo
     }
     @Override
     public void serverTick() {
-        int factor = MagicChecks.getComponentDissipationFactor(player);
+        int factor = MagicUtils.getComponentDissipationFactor(player);
         if(factor < 0){
             FlowUnit.Mutable.updateAllValues(map, mutable -> mutable.subtract(mutable.getElement().value().baseDissipation() + factor));
         }

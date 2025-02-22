@@ -6,17 +6,16 @@ import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.CurseInstance;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.curses.TherianthropyCurse;
-import de.nexusrealms.creaturemod.magic.MagicChecks;
+import de.nexusrealms.creaturemod.magic.MagicUtils;
 import de.nexusrealms.creaturemod.magic.flow.FlowUnit;
+import de.nexusrealms.creaturemod.magic.spell.Spell;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.RegistryEntryArgumentType;
 import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.command.argument.RegistryKeyArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.command.ServerCommandSource;
@@ -114,10 +113,19 @@ public class ModCommands {
                                                         Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(commandContext, "players");
                                                         FlowUnit flowUnit = FlowUnit.of(RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "element",
                                                                 ModRegistries.Keys.ELEMENTS), IntegerArgumentType.getInteger(commandContext, "amount"));
-                                                        MagicChecks.doIfDoesSorcery(players, player -> player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE).addFlow(flowUnit));
+                                                        MagicUtils.doIfDoesSorcery(players, player -> player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE).addFlow(flowUnit));
                                                         commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.flow.add", flowUnit.getElement().getIdAsString(), flowUnit.getValue(), players.size()), false);
                                                         return 1;
                                                     }))))));
+            commandDispatcher.register(literal("castspell")
+                    .then(argument("spell", RegistryEntryReferenceArgumentType.registryEntry(commandRegistryAccess, ModRegistries.Keys.SPELLS))
+                            .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
+                            .executes(commandContext -> {
+                                RegistryEntry<Spell> spell = RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "spell", ModRegistries.Keys.SPELLS);
+                                spell.value().cast(commandContext.getSource().getPlayer(), null, null);
+                                commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", spell.getIdAsString()), false);
+                                return 1;
+                            })));
         });
     }
 }

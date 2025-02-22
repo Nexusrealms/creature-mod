@@ -1,0 +1,19 @@
+{
+  "flowCost": {
+    "type": "creature-mod:simple",
+    "flowUnit": {
+      "element": "creature-mod:fire",
+      "value": 1
+    }
+  },
+  "action": {
+    "type": "creature-mod:give_item",
+    "itemStack": {
+      "count": 1,
+      "id": "minecraft:dirt"
+    }
+  },
+  "description": {
+    "translate": "spell.creature-mod.test"
+  }
+}

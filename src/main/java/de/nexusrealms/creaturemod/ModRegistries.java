@@ -3,7 +3,9 @@ package de.nexusrealms.creaturemod;
 import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.magic.element.Element;
 import de.nexusrealms.creaturemod.magic.flow.FlowCostType;
+import de.nexusrealms.creaturemod.magic.spell.Spell;
 import de.nexusrealms.creaturemod.magic.spell.action.SpellActionType;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -18,13 +20,16 @@ public class ModRegistries {
     private static <T> Registry<T> createSimple(RegistryKey<Registry<T>> registryKey){
         return FabricRegistryBuilder.createSimple(registryKey).buildAndRegister();
     }
-    public static void init(){}
+    public static void init(){
+        DynamicRegistries.registerSynced(Keys.SPELLS, Spell.CODEC);
+    }
     public static class Keys{
         public static final RegistryKey<Registry<Curse>> CURSES = create("curse");
         public static final RegistryKey<Registry<Element>> ELEMENTS = create("element");
         public static final RegistryKey<Registry<SpellActionType<?>>> SPELL_ACTION_TYPES = create("spell_action_type");
         public static final RegistryKey<Registry<FlowCostType<?>>> FLOW_COST_TYPES = create("flow_cost_type");
 
+        public static final RegistryKey<Registry<Spell>> SPELLS = create("spell");
 
         private static <T> RegistryKey<Registry<T>> create(String name){
             return RegistryKey.ofRegistry(CreatureMod.id(name));
