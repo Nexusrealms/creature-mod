@@ -51,6 +51,7 @@ public class LangProvider extends FabricLanguageProvider {
         translationBuilder.add("message.creature-mod.curse.apply", "The curse %s has been applied to %s!");
         translationBuilder.add("message.creature-mod.flow.add", "Flow of element %s of value %s has been added to %s players");
         translationBuilder.add("message.creature-mod.spell.cast", "Cast spell %s!");
+        translationBuilder.add("message.creature-mod.spell.notfound", "Could not find any spell for incantation %s!");
     }
     private void generateSpellTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
         translationBuilder.add("spell.creature-mod.test", "Test spell");

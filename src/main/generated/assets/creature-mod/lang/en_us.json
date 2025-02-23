@@ -19,5 +19,6 @@
   "message.creature-mod.curse.remove": "The curse %s has been removed from ",
   "message.creature-mod.flow.add": "Flow of element %s of value %s has been added to %s players",
   "message.creature-mod.spell.cast": "Cast spell %s!",
+  "message.creature-mod.spell.notfound": "Could not find any spell for incantation %s!",
   "spell.creature-mod.test": "Test spell"
 }

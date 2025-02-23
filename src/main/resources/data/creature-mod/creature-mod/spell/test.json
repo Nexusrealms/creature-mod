@@ -27,5 +27,6 @@
   },
   "description": {
     "translate": "spell.creature-mod.test"
-  }
+  },
+  "incantation": "A bude test"
 }

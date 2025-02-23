@@ -2,12 +2,14 @@ package de.nexusrealms.creaturemod;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.CurseInstance;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.curses.TherianthropyCurse;
 import de.nexusrealms.creaturemod.magic.MagicUtils;
 import de.nexusrealms.creaturemod.magic.flow.FlowUnit;
+import de.nexusrealms.creaturemod.magic.spell.Incantation;
 import de.nexusrealms.creaturemod.magic.spell.Spell;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
@@ -24,6 +26,7 @@ import net.minecraft.text.Text;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static net.minecraft.server.command.CommandManager.literal;
 import static net.minecraft.server.command.CommandManager.argument;
@@ -124,6 +127,20 @@ public class ModCommands {
                                 RegistryEntry<Spell> spell = RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "spell", ModRegistries.Keys.SPELLS);
                                 spell.value().cast(commandContext.getSource().getPlayer(), null, null);
                                 commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", spell.getIdAsString()), false);
+                                return 1;
+                            })));
+            commandDispatcher.register(literal("incantation")
+                    .then(argument("words", StringArgumentType.string())
+                            .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
+                            .executes(commandContext -> {
+                                String words = StringArgumentType.getString(commandContext, "words");
+                                Optional<RegistryEntry<Spell>> optionalSpell = Incantation.lookup(commandRegistryAccess, words);
+                                if(optionalSpell.isPresent()){
+                                    optionalSpell.get().value().cast(commandContext.getSource().getPlayer(), null, null);
+                                    commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", optionalSpell.get().getIdAsString()), false);
+                                } else {
+                                    commandContext.getSource().sendError(Text.translatable("message.creature-mod.spell.notfound", words));
+                                }
                                 return 1;
                             })));
         });

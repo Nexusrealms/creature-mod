@@ -19,13 +19,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public record Spell(FlowCost flowCost, SpellAction action, Text description, Optional<SoundEvent> soundEvent) {
+public record Spell(FlowCost flowCost, SpellAction action, Text description, Optional<SoundEvent> soundEvent, Incantation incantation) {
 
     public static final Codec<Spell> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             FlowCost.CODEC.fieldOf("flowCost").forGetter(Spell::flowCost),
             SpellAction.CODEC.fieldOf("action").forGetter(Spell::action),
             TextCodecs.CODEC.fieldOf("description").forGetter(Spell::description),
-            SoundEvent.CODEC.optionalFieldOf("castingSound").forGetter(Spell::soundEvent)
+            SoundEvent.CODEC.optionalFieldOf("castingSound").forGetter(Spell::soundEvent),
+            Incantation.CODEC.fieldOf("incantation").forGetter(Spell::incantation)
     ).apply(instance, Spell::new));
 
     public boolean cast(ServerPlayerEntity caster, @Nullable ItemStack castingItem, @Nullable Entity clickTarget){
