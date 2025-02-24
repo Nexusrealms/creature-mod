@@ -1,0 +1,17 @@
+{
+  "flowCost": {
+    "type": "creature-mod:simple",
+    "flowUnit": {
+      "element": "creature-mod:void",
+      "value": 1
+    }
+  },
+  "rootEffect": {
+    "type": "creature-mod:apply_to_world",
+    "effect": {
+      "daytime": 18000,
+      "type": "creature-mod:change_time"
+    }
+  },
+  "incantation": "Vasai sees ka nocthr"
+}

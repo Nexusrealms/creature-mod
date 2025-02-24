@@ -1,7 +1,6 @@
 package de.nexusrealms.creaturemod;
 
 import de.nexusrealms.creaturemod.blocks.ModBlocks;
-import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.entities.ModEntities;
 import de.nexusrealms.creaturemod.entities.brain.ModActivities;
@@ -10,12 +9,9 @@ import de.nexusrealms.creaturemod.entities.brain.sensor.ModSensors;
 import de.nexusrealms.creaturemod.items.ModItems;
 import de.nexusrealms.creaturemod.magic.element.Elements;
 import de.nexusrealms.creaturemod.magic.flow.FlowCostType;
-import de.nexusrealms.creaturemod.magic.spell.Spell;
-import de.nexusrealms.creaturemod.magic.spell.action.SpellActionType;
+import de.nexusrealms.creaturemod.magic.spell.action.SpellEffectType;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +50,7 @@ public class CreatureMod implements ModInitializer {
 		Curses.init();
 		Elements.init();
 		FlowCostType.init();
-		SpellActionType.init();
+		SpellEffectType.init();
 		LOGGER.info("Hello Fabric world!");
 	}
 }
