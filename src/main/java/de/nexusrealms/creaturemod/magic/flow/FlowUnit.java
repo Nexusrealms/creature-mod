@@ -4,21 +4,25 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.nexusrealms.creaturemod.ModRegistries;
 import de.nexusrealms.creaturemod.magic.element.Element;
-import net.minecraft.registry.Registry;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Flow;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.UnaryOperator;
 
 public interface FlowUnit{
-    Codec<Immutable> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ModRegistries.ELEMENTS.getEntryCodec().fieldOf("element").forGetter(Immutable::element),
-            Codec.INT.fieldOf("value").forGetter(Immutable::value)
+    Codec<FlowUnit> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ModRegistries.ELEMENTS.getEntryCodec().fieldOf("element").forGetter(FlowUnit::getElement),
+            Codec.INT.fieldOf("value").forGetter(FlowUnit::getValue)
     ).apply(instance, Immutable::new));
+    Codec<List<FlowUnit>> LIST_CODEC = CODEC.listOf();
+    PacketCodec<RegistryByteBuf, Immutable> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.registryEntry(ModRegistries.Keys.ELEMENTS), Immutable::element, PacketCodecs.VAR_INT, Immutable::value, Immutable::new);
     Codec<Map<RegistryEntry<Element>, Mutable>> MAP_STORAGE_CODEC = Codec.unboundedMap(ModRegistries.ELEMENTS.getEntryCodec(), Codec.INT).xmap(map -> {
         HashMap<RegistryEntry<Element>, Mutable> newmap = new HashMap<>();
         map.forEach((elementRegistryEntry, integer) -> newmap.put(elementRegistryEntry, new Mutable(elementRegistryEntry, integer)));
@@ -28,7 +32,19 @@ public interface FlowUnit{
         registryEntryMutableMap.forEach((elementRegistryEntry, mutable) -> newmap.put(elementRegistryEntry, mutable.getValue()));
         return newmap;
     });
-
+    default FlowUnit combine(FlowUnit other){
+        if(elementEquals(other)){
+            return new Immutable(getElement(), getValue() + other.getValue());
+        }
+        throw new IllegalArgumentException("Tried to combine flow of different elements");
+    }
+    default boolean elementEquals(FlowUnit other){
+        return getElement().getKey().equals(other.getElement().getKey());
+    }
+    default boolean elementEquals(RegistryEntry<Element> entry){
+        return getElement().getKey().equals(entry.getKey());
+    }
+    Mutable toMutable();
     RegistryEntry<Element> getElement();
     int getValue();
     default boolean isEnoughFor(FlowUnit other){
@@ -38,6 +54,7 @@ public interface FlowUnit{
         return new Immutable(element, value);
     }
     record Immutable(RegistryEntry<Element> element, int value) implements FlowUnit {
+
 
         @Override
         public RegistryEntry<Element> getElement() {
@@ -53,7 +70,7 @@ public interface FlowUnit{
         }
     }
     class Mutable implements FlowUnit{
-        public static final Codec<Mutable> CODEC = FlowUnit.CODEC.xmap(Immutable::toMutable, Mutable::toImmutable);
+        public static final Codec<Mutable> CODEC = FlowUnit.CODEC.xmap(FlowUnit::toMutable, Mutable::toImmutable);
 
         private final RegistryEntry<Element> element;
         private int value;
@@ -80,6 +97,12 @@ public interface FlowUnit{
         public Immutable toImmutable(){
             return new Immutable(element, value);
         }
+
+        @Override
+        public Mutable toMutable() {
+            return this;
+        }
+
         public static <K, V> void updateAllValues(Map<K, V> map, Consumer<V> operator){
             map.forEach((k, v) -> operator.accept(v));
         }

@@ -37,9 +37,10 @@ public class PlayerFlowStorageComponent implements FlowStorage,  AutoSyncedCompo
     public FlowUnit getFlow(RegistryEntry<Element> element){
         return getFlowInternal(element).toImmutable();
     }
-    public void addFlow(FlowUnit flow){
+    public boolean addFlow(FlowUnit flow){
         FlowUnit.Mutable mutable = getFlowInternal(flow.getElement());
         mutable.add(flow.getValue());
+        return true;
     }
     @Override
     public void serverTick() {

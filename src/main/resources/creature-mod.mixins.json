@@ -3,7 +3,8 @@
 	"package": "de.nexusrealms.creaturemod.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"PlayerEntityMixin",
+		"PlayerInventoryAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1
