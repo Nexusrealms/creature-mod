@@ -46,6 +46,9 @@
 			"creature-mod:therianthropy",
 			"creature-mod:player_flow_storage"
 
-		]
+		],
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1657": ["de/nexusrealms/creaturemod/flow/InventoryFlowStorageProvider"]
+		}
 	}
 }

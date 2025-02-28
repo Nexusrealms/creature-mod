@@ -26,8 +26,7 @@ public abstract class PlayerEntityMixin implements InventoryFlowStorageProvider 
 	public void initInventoryFlowStorage(World world, BlockPos pos, float yaw, GameProfile gameProfile, CallbackInfo ci){
 		inventoryFlowStorage = new InventoryFlowStorage(inventory);
 	}
-	@Unique
-	public InventoryFlowStorage creature_mod$getInventoryFlowStorage() {
+	public InventoryFlowStorage getInventoryFlowStorage() {
 		return inventoryFlowStorage;
 	}
 }
