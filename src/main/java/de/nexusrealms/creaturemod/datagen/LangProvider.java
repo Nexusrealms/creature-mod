@@ -22,6 +22,7 @@ public class LangProvider extends FabricLanguageProvider {
         generateItemTranslations(wrapperLookup, translationBuilder);
         generateMessageTranslations(wrapperLookup, translationBuilder);
         generateSpellTranslations(wrapperLookup, translationBuilder);
+        generateItemGroupTranslations(wrapperLookup, translationBuilder);
     }
     private void generateBlockTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
         translationBuilder.add(ModBlocks.GARLIC, "Garlic Plant");
@@ -29,6 +30,7 @@ public class LangProvider extends FabricLanguageProvider {
     private void generateItemTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
         translationBuilder.add(ModItems.GARLIC_CLOVE, "Garlic Clove");
         translationBuilder.add(ModItems.GARLIC_BULB, "Garlic Bulb");
+        translationBuilder.add(ModItems.ELEMENT_FLASK, "Element Flask");
     }
     private void generateEntityTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.WEREWOLF, "Werewolf");
@@ -50,11 +52,16 @@ public class LangProvider extends FabricLanguageProvider {
         translationBuilder.add("message.creature-mod.curse.none", "%s has no curses!");
         translationBuilder.add("message.creature-mod.curse.apply", "The curse %s has been applied to %s!");
         translationBuilder.add("message.creature-mod.flow.add", "Flow of element %s of value %s has been added to %s players");
+        translationBuilder.add("message.creature-mod.flow.add.item", "Flow of element %s of value %s has been added to ");
         translationBuilder.add("message.creature-mod.spell.cast", "Cast spell %s!");
         translationBuilder.add("message.creature-mod.spell.notfound", "Could not find any spell for incantation %s!");
     }
     private void generateSpellTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
         translationBuilder.add("spell.creature-mod.test", "Test spell");
+
+    }
+    private void generateItemGroupTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
+        translationBuilder.add("itemgroup.creature-mod.magical", "Magical items");
 
     }
 }

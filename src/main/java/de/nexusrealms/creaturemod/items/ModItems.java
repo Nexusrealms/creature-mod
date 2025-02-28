@@ -18,6 +18,7 @@ public class ModItems {
     public static final Item GARLIC_CLOVE = create("garlic_clove", new AliasedBlockItem(ModBlocks.GARLIC, new Item.Settings().food(FoodComponents.GARLIC_CLOVE)), ItemGroups.FOOD_AND_DRINK,
             (fabricItemGroupEntries, item) -> fabricItemGroupEntries.addAfter(Items.BEETROOT, item));
     public static final Item GARLIC_BULB = create("garlic_bulb", new Item(new Item.Settings()), ItemGroups.NATURAL);
+    public static final Item ELEMENT_FLASK = create("element_flask", new Item(new Item.Settings().component(ModItemComponents.FLOW_CAPACITY, 1000)), ModItemGroups.MAGICAL);
     private static <T extends Item> T create(String name, T item, RegistryKey<ItemGroup> group){
         return create(name, item, group, FabricItemGroupEntries::add);
     }

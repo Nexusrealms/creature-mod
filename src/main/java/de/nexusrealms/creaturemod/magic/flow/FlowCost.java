@@ -15,7 +15,7 @@ public interface FlowCost {
     FlowCostType<?> getType();
     boolean drain(FlowStorage flowStorage);
     boolean canDrain(FlowStorage flowStorage);
-    record Simple(FlowUnit.Immutable flowUnit) implements FlowCost {
+    record Simple(FlowUnit flowUnit) implements FlowCost {
         public static final MapCodec<Simple> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 FlowUnit.CODEC.fieldOf("flowUnit").forGetter(Simple::flowUnit)
                 ).apply(instance, Simple::new));

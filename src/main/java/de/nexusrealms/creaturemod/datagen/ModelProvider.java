@@ -1,15 +1,13 @@
 package de.nexusrealms.creaturemod.datagen;
 
+import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.blocks.ModBlocks;
 import de.nexusrealms.creaturemod.entities.ModEntities;
 import de.nexusrealms.creaturemod.items.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.CropBlock;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.Models;
+import net.minecraft.data.client.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.SpawnEggItem;
@@ -32,6 +30,10 @@ public class ModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         generateSpawnEggModels(itemModelGenerator);
         itemModelGenerator.register(ModItems.GARLIC_CLOVE, Models.GENERATED);
+        Models.GENERATED_TWO_LAYERS.upload(
+                ModelIds.getItemModelId(ModItems.ELEMENT_FLASK),
+                TextureMap.layered(CreatureMod.id("item/element_flask"), CreatureMod.id("item/element_flask_overlay")),
+                itemModelGenerator.writer);
     }
     private void generateSpawnEggModels(ItemModelGenerator itemModelGenerator){
         makeSpawnEgg(itemModelGenerator, ModEntities.BEAR);

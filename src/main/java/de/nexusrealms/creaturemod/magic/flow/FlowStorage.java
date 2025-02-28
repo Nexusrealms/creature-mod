@@ -19,6 +19,13 @@ public interface FlowStorage {
         if(MagicUtils.shouldDoSorcery(player)) return Optional.of(player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE));
         return Optional.empty();
     }
+    static FlowStorage getFlowStorage(PlayerEntity player){
+        if(MagicUtils.shouldDoSorcery(player)){
+            return new Dual(player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE), ((InventoryFlowStorageProvider) player).getInventoryFlowStorage());
+        } else {
+            return ((InventoryFlowStorageProvider) player).getInventoryFlowStorage();
+        }
+    }
     record Dual(FlowStorage primary, FlowStorage secondary) implements FlowStorage{
 
         @Override

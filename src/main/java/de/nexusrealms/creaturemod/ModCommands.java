@@ -7,7 +7,9 @@ import de.nexusrealms.creaturemod.curses.Curse;
 import de.nexusrealms.creaturemod.curses.CurseInstance;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.curses.TherianthropyCurse;
+import de.nexusrealms.creaturemod.items.ModItemComponents;
 import de.nexusrealms.creaturemod.magic.MagicUtils;
+import de.nexusrealms.creaturemod.magic.flow.FlowStorage;
 import de.nexusrealms.creaturemod.magic.flow.FlowUnit;
 import de.nexusrealms.creaturemod.magic.spell.Incantation;
 import de.nexusrealms.creaturemod.magic.spell.Spell;
@@ -18,11 +20,13 @@ import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.command.argument.RegistryKeyArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 
 import java.util.Collection;
 import java.util.List;
@@ -108,6 +112,20 @@ public class ModCommands {
             }
             commandDispatcher.register(literal("flow")
                     .then(literal("add")
+                            .then(literal("item")
+                                    .then(argument("element", RegistryEntryReferenceArgumentType.registryEntry(commandRegistryAccess, ModRegistries.Keys.ELEMENTS))
+                                            .then(argument("amount", IntegerArgumentType.integer(0))
+                                                    .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
+                                                    .executes(commandContext -> {
+                                                        FlowUnit flowUnit = FlowUnit.of(RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "element",
+                                                                ModRegistries.Keys.ELEMENTS), IntegerArgumentType.getInteger(commandContext, "amount"));
+                                                        ItemStack stack = commandContext.getSource().getPlayer().getStackInHand(Hand.MAIN_HAND);
+                                                        if(stack.contains(ModItemComponents.FLOW_CAPACITY)){
+                                                            stack.set(ModItemComponents.STORED_FLOW, flowUnit);
+                                                        }
+                                                        commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.flow.add.item", flowUnit.getElement().getIdAsString(), flowUnit.getValue()).append(stack.getName()), false);
+                                                        return 1;
+                                                    }))))
                             .then(argument("players", EntityArgumentType.players())
                                     .then(argument("element", RegistryEntryReferenceArgumentType.registryEntry(commandRegistryAccess, ModRegistries.Keys.ELEMENTS))
                                             .then(argument("amount", IntegerArgumentType.integer(0))
@@ -116,7 +134,7 @@ public class ModCommands {
                                                         Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(commandContext, "players");
                                                         FlowUnit flowUnit = FlowUnit.of(RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "element",
                                                                 ModRegistries.Keys.ELEMENTS), IntegerArgumentType.getInteger(commandContext, "amount"));
-                                                        MagicUtils.doIfDoesSorcery(players, player -> player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE).addFlow(flowUnit));
+                                                        players.stream().map(FlowStorage::getFlowStorage).forEach(flowStorage -> flowStorage.addFlow(flowUnit));
                                                         commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.flow.add", flowUnit.getElement().getIdAsString(), flowUnit.getValue(), players.size()), false);
                                                         return 1;
                                                     }))))));

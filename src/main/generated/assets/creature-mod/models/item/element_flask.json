@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "creature-mod:item/element_flask",
+    "layer1": "creature-mod:item/element_flask_overlay"
+  }
+}

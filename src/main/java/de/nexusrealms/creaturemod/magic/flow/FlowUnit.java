@@ -22,7 +22,7 @@ public interface FlowUnit{
             Codec.INT.fieldOf("value").forGetter(FlowUnit::getValue)
     ).apply(instance, Immutable::new));
     Codec<List<FlowUnit>> LIST_CODEC = CODEC.listOf();
-    PacketCodec<RegistryByteBuf, Immutable> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.registryEntry(ModRegistries.Keys.ELEMENTS), Immutable::element, PacketCodecs.VAR_INT, Immutable::value, Immutable::new);
+    PacketCodec<RegistryByteBuf, FlowUnit> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.registryEntry(ModRegistries.Keys.ELEMENTS), FlowUnit::getElement, PacketCodecs.VAR_INT, FlowUnit::getValue, Immutable::new);
     Codec<Map<RegistryEntry<Element>, Mutable>> MAP_STORAGE_CODEC = Codec.unboundedMap(ModRegistries.ELEMENTS.getEntryCodec(), Codec.INT).xmap(map -> {
         HashMap<RegistryEntry<Element>, Mutable> newmap = new HashMap<>();
         map.forEach((elementRegistryEntry, integer) -> newmap.put(elementRegistryEntry, new Mutable(elementRegistryEntry, integer)));

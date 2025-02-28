@@ -6,6 +6,7 @@ import de.nexusrealms.creaturemod.entities.ModEntities;
 import de.nexusrealms.creaturemod.entities.brain.ModActivities;
 import de.nexusrealms.creaturemod.entities.brain.memory.ModMemories;
 import de.nexusrealms.creaturemod.entities.brain.sensor.ModSensors;
+import de.nexusrealms.creaturemod.items.ModItemGroups;
 import de.nexusrealms.creaturemod.items.ModItems;
 import de.nexusrealms.creaturemod.magic.element.Elements;
 import de.nexusrealms.creaturemod.magic.flow.FlowCostType;
@@ -40,6 +41,7 @@ public class CreatureMod implements ModInitializer {
 		//Keep this one on the top
 		ModRegistries.init();
 
+		ModItemGroups.init();
 		ModCommands.init();
 		ModBlocks.init();
 		ModItems.init();
