@@ -17,6 +17,7 @@ public class Curses {
     public static final TherianthropyCurse<WerewolfEntity> LYCANTHROPY = create("lycanthropy", new TherianthropyCurse<>(ModEntities.WEREWOLF, 0));
     public static final TherianthropyCurse<WerebearEntity> URSANTHROPY = create("ursanthropy", new TherianthropyCurse<>(ModEntities.WEREBEAR, 1));
     public static final TherianthropyCurse<WerecatEntity> AILURANTHROPY = create("ailuranthropy", new TherianthropyCurse<>(ModEntities.WERECAT, 1));
+    public static final TherianthropyCurse<WerecatEntity> NETOANTHROPY = create("netoanthropy", new TherianthropyCurse<>(ModEntities.WERECAT, 1));
 
     private static <T extends Curse> T create(String name, T curse){
         return Registry.register(ModRegistries.CURSES, CreatureMod.id(name), curse);

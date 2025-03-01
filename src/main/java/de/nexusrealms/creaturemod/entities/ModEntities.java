@@ -5,6 +5,7 @@ import de.nexusrealms.creaturemod.entities.elemental.AirElementalEntity;
 import de.nexusrealms.creaturemod.entities.elemental.WaterElementalEntity;
 import de.nexusrealms.creaturemod.entities.natural.BearEntity;
 import de.nexusrealms.creaturemod.entities.spectral.WraithEntity;
+import de.nexusrealms.creaturemod.entities.therianthrope.WerebatEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerebearEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerecatEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerewolfEntity;
@@ -33,6 +34,9 @@ public class ModEntities {
             .dimensions(1.f, 2f).build(), 0xb77635, 0x000000, WerebearEntity::getDefaultAttributes);
     public static final EntityType<WerecatEntity> WERECAT = createWithSpawnEgg("werecat", EntityType.Builder.create(WerecatEntity::new, SpawnGroup.CREATURE)
             .dimensions(0.8f, 1.9f).build(), 0xFFFFFF, 0x000000, WerecatEntity::getDefaultAttributes);
+    public static final EntityType<WerebatEntity> WEREBAT = createWithSpawnEgg("werebat", EntityType.Builder.create(WerebatEntity::new, SpawnGroup.CREATURE)
+            .dimensions(0.8f, 1.7f).build(), 0xFFFFFF, 0x000000, WerebatEntity::getDefaultAttributes);
+
     public static final EntityType<WraithEntity> WRAITH = createWithSpawnEgg("wraith", EntityType.Builder.create(WraithEntity::new, SpawnGroup.MONSTER)
             .dimensions(0.8f, 1.8f).build(), 0x000000, 0xFF0000, WraithEntity::getDefaultAttributes);
     public static final EntityType<AirElementalEntity> AIR_ELEMENTAL = createWithSpawnEgg("air_elemental", EntityType.Builder.create(AirElementalEntity::new, SpawnGroup.MONSTER)

@@ -1,6 +1,7 @@
 {
   "entity.creature-mod.air_elemental": "Air Elemental",
   "entity.creature-mod.bear": "Bear",
+  "entity.creature-mod.werebat": "Werebat",
   "entity.creature-mod.werebear": "Werebear",
   "entity.creature-mod.werecat": "Werecat",
   "entity.creature-mod.werewolf": "Werewolf",
@@ -10,6 +11,7 @@
   "item.creature-mod.element_flask": "Element Flask",
   "item.creature-mod.garlic_bulb": "Garlic Bulb",
   "item.creature-mod.garlic_clove": "Garlic Clove",
+  "item.creature-mod.werebat_spawn_egg": "Werebat Spawn Egg",
   "item.creature-mod.werebear_spawn_egg": "Werebear Spawn Egg",
   "item.creature-mod.werecat_spawn_egg": "Werecat Spawn Egg",
   "item.creature-mod.werewolf_spawn_egg": "Werewolf Spawn Egg",

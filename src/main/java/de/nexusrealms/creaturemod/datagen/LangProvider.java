@@ -36,6 +36,7 @@ public class LangProvider extends FabricLanguageProvider {
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.WEREWOLF, "Werewolf");
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.WEREBEAR, "Werebear");
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.WERECAT, "Werecat");
+        generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.WEREBAT, "Werebat");
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.WRAITH, "Wraith");
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.BEAR, "Bear");
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.AIR_ELEMENTAL, "Air Elemental");

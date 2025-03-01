@@ -22,9 +22,8 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-public record ForwardBeamEffect(RegistryEntry<QuasarParticleData> particleSettings) implements SpellEffect<Entity> {
-    public static final MapCodec<ForwardBeamEffect> CODEC = QuasarParticleData.CODEC.fieldOf("particleSettings").xmap(ForwardBeamEffect::new, ForwardBeamEffect::particleSettings);
-    public static final Identifier BEAM_EMITTER = CreatureMod.id("colored_beam_emitter");
+public record ForwardBeamEffect(Identifier emitter) implements SpellEffect<Entity> {
+    public static final MapCodec<ForwardBeamEffect> CODEC = Identifier.CODEC.fieldOf("emitter").xmap(ForwardBeamEffect::new, ForwardBeamEffect::emitter);
     @Override
     public SpellEffectType<? extends SpellEffect<Entity>> getType() {
         return SpellEffectType.FORWARD_BEAM;

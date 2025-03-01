@@ -8,7 +8,7 @@
   },
   "rootEffect": {
     "type": "creature-mod:forward_beam",
-    "color": 16736512
+    "emitter": "creature-mod:placeholder"
   },
   "description": {
     "translate": "spell.creature-mod.test"

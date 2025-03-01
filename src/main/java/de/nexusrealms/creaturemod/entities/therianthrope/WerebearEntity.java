@@ -26,7 +26,7 @@ public class WerebearEntity extends TherianthropeEntity implements GeoEntity {
     protected static final RawAnimation RUN = RawAnimation.begin().thenLoop("Run");
     protected static final RawAnimation WALK = RawAnimation.begin().thenLoop("Walk");
     protected static final RawAnimation TRANSFORM = RawAnimation.begin().thenPlay("transform");
-    protected static final RawAnimation ATTACK = RawAnimation.begin().thenLoop("Attack");
+    protected static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("Attack");
 
     public WerebearEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -40,7 +40,7 @@ public class WerebearEntity extends TherianthropeEntity implements GeoEntity {
 
     @Override
     public TherianthropyCurse<?> getCurseType() {
-        return Curses.LYCANTHROPY;
+        return Curses.URSANTHROPY;
     }
 
     @Override

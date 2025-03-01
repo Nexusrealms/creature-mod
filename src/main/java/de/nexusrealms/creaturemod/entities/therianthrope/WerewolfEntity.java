@@ -23,7 +23,7 @@ public class WerewolfEntity extends TherianthropeEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     protected static final RawAnimation RUN = RawAnimation.begin().thenLoop("Run");
-    protected static final RawAnimation ATTACK = RawAnimation.begin().thenLoop("Attack");
+    protected static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("Attack");
 
     public WerewolfEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
