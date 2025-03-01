@@ -26,6 +26,33 @@ public interface FlowStorage {
             return ((InventoryFlowStorageProvider) player).getInventoryFlowStorage();
         }
     }
+    class None implements FlowStorage{
+
+        @Override
+        public boolean addFlow(FlowUnit flow) {
+            return false;
+        }
+
+        @Override
+        public FlowUnit getFlow(RegistryEntry<Element> elementRegistryEntry) {
+            return new FlowUnit.Immutable(elementRegistryEntry, 0);
+        }
+
+        @Override
+        public String dumpFlow() {
+            return "No flow here ;)";
+        }
+
+        @Override
+        public boolean drainFlow(FlowUnit flowUnit) {
+            return false;
+        }
+
+        @Override
+        public boolean canDrain(FlowUnit flowUnit) {
+            return false;
+        }
+    }
     record Dual(FlowStorage primary, FlowStorage secondary) implements FlowStorage{
 
         @Override

@@ -106,7 +106,11 @@ public class ModCommands {
                 commandDispatcher.register(literal("flowdump")
                         .requires(ServerCommandSource::isExecutedByPlayer)
                         .executes(commandContext -> {
-                            commandContext.getSource().sendFeedback(() -> Text.literal(FlowStorage.getFlowStorage(commandContext.getSource().getPlayer()).dumpFlow()), false);
+                            try {
+                                commandContext.getSource().sendFeedback(() -> Text.literal(FlowStorage.getFlowStorage(commandContext.getSource().getPlayer()).dumpFlow()), false);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
                             return 1;
                         }));
             }

@@ -1,4 +1,4 @@
-package de.nexusrealms.creaturemod.magic.spell.action;
+package de.nexusrealms.creaturemod.magic.spell.effect;
 
 import com.mojang.serialization.Codec;
 import de.nexusrealms.creaturemod.ModRegistries;

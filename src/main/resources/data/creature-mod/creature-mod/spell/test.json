@@ -1,19 +1,19 @@
 {
   "flowCost": {
-    "type": "creature-mod:any",
+    "type": "creature-mod:all",
     "list": [
       {
         "type": "creature-mod:simple",
         "flowUnit": {
           "element": "creature-mod:fire",
-          "value": 1
+          "value": 100
         }
       },
       {
         "type": "creature-mod:simple",
         "flowUnit": {
           "element": "creature-mod:water",
-          "value": 10
+          "value": 500
         }
       }
     ]

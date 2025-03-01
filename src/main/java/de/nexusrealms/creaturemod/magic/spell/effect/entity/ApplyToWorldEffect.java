@@ -1,9 +1,9 @@
-package de.nexusrealms.creaturemod.magic.spell.action.entity;
+package de.nexusrealms.creaturemod.magic.spell.effect.entity;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.nexusrealms.creaturemod.magic.spell.action.SpellEffect;
-import de.nexusrealms.creaturemod.magic.spell.action.SpellEffectType;
+import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffect;
+import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffectType;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;

@@ -1,11 +1,11 @@
-package de.nexusrealms.creaturemod.magic.spell.action;
+package de.nexusrealms.creaturemod.magic.spell.effect;
 
 import com.mojang.serialization.MapCodec;
 import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.ModRegistries;
-import de.nexusrealms.creaturemod.magic.spell.action.entity.ApplyToWorldEffect;
-import de.nexusrealms.creaturemod.magic.spell.action.entity.GiveItemEffect;
-import de.nexusrealms.creaturemod.magic.spell.action.world.ChangeDaytimeEffect;
+import de.nexusrealms.creaturemod.magic.spell.effect.entity.ApplyToWorldEffect;
+import de.nexusrealms.creaturemod.magic.spell.effect.entity.GiveItemEffect;
+import de.nexusrealms.creaturemod.magic.spell.effect.world.ChangeDaytimeEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.Registry;
 import net.minecraft.world.World;

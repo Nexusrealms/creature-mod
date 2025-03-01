@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.nexusrealms.creaturemod.magic.flow.FlowCost;
 import de.nexusrealms.creaturemod.magic.flow.FlowStorage;
-import de.nexusrealms.creaturemod.magic.spell.action.SpellEffect;
+import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -16,7 +16,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text description, Optional<SoundEvent> soundEvent, Incantation incantation) {
+public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text description,
+                    Optional<SoundEvent> soundEvent, Incantation incantation) {
 
     public static final Codec<Spell> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             FlowCost.CODEC.fieldOf("flowCost").forGetter(Spell::flowCost),
@@ -26,13 +27,11 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
             Incantation.CODEC.fieldOf("incantation").forGetter(Spell::incantation)
     ).apply(instance, Spell::new));
 
-    public boolean cast(ServerPlayerEntity caster, @Nullable ItemStack castingItem, @Nullable Entity clickTarget){
-        Optional<FlowStorage> flowStorage = FlowStorage.getPreferredFlowStorage(caster);
-        if(flowStorage.isPresent()){
-            if(flowCost.drain(flowStorage.get())){
-                soundEvent.ifPresent(sound -> caster.getWorld().playSound(null, caster.getBlockPos(), sound, SoundCategory.PLAYERS, 1f, 1f));
-                return rootEffect.apply(caster, caster,  castingItem, clickTarget);
-            }
+    public boolean cast(ServerPlayerEntity caster, @Nullable ItemStack castingItem, @Nullable Entity clickTarget) {
+        FlowStorage flowStorage = FlowStorage.getFlowStorage(caster);
+        if (flowCost.drain(flowStorage)) {
+            soundEvent.ifPresent(sound -> caster.getWorld().playSound(null, caster.getBlockPos(), sound, SoundCategory.PLAYERS, 1f, 1f));
+            return rootEffect.apply(caster, caster, castingItem, clickTarget);
         }
         return false;
     }
