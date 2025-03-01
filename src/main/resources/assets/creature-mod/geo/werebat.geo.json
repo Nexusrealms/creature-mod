@@ -1,0 +1,151 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "Body",
+					"pivot": [0, 25, 0],
+					"rotation": [2.5, 0, 0]
+				},
+				{
+					"name": "Torso",
+					"parent": "Body",
+					"pivot": [0, 18, 0.5],
+					"cubes": [
+						{"origin": [-3, 16, -1], "size": [6, 10, 3], "uv": [40, 22]},
+						{"origin": [-3.5, 22, -1.5], "size": [7, 7, 4], "uv": [28, 11]}
+					]
+				},
+				{
+					"name": "Head",
+					"parent": "Torso",
+					"pivot": [0, 29, 0],
+					"cubes": [
+						{"origin": [-2, 28, -2.25], "size": [4, 4, 4], "uv": [50, 11]}
+					]
+				},
+				{
+					"name": "Nose",
+					"parent": "Head",
+					"pivot": [0, 29, -2.25],
+					"cubes": [
+						{"origin": [-1, 29, -2.75], "size": [2, 1, 1], "uv": [50, 19]}
+					]
+				},
+				{
+					"name": "Leftear",
+					"parent": "Head",
+					"pivot": [2, 31, 0],
+					"cubes": [
+						{"origin": [1, 30, -0.25], "size": [4, 6, 1], "uv": [44, 51]}
+					]
+				},
+				{
+					"name": "Rightear",
+					"parent": "Head",
+					"pivot": [-2, 31, 0],
+					"cubes": [
+						{"origin": [-5, 30, -0.25], "size": [4, 6, 1], "uv": [12, 50]}
+					]
+				},
+				{
+					"name": "Rightwing",
+					"parent": "Torso",
+					"pivot": [-3, 27, 1],
+					"rotation": [4.60659, 14.2906, 33.07779],
+					"cubes": [
+						{"origin": [-13, 25.5, 0], "size": [10, 3, 2], "uv": [44, 46]}
+					]
+				},
+				{
+					"name": "bone",
+					"parent": "Rightwing",
+					"pivot": [-6, 22, 1],
+					"cubes": [
+						{"origin": [-11, 15, 1.01], "size": [14, 11, 0], "uv": [28, 0]}
+					]
+				},
+				{
+					"name": "Faciestrightnazis",
+					"parent": "Rightwing",
+					"pivot": [-11, 27, 1],
+					"rotation": [0, 0, -72.5],
+					"cubes": [
+						{"origin": [-25, 26, 0.5], "size": [13, 2, 1], "uv": [40, 38]}
+					]
+				},
+				{
+					"name": "bone2",
+					"parent": "Faciestrightnazis",
+					"pivot": [-13, 22, 1],
+					"cubes": [
+						{"origin": [-24, 13, 1], "size": [14, 13, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "Leftwing",
+					"parent": "Torso",
+					"pivot": [3, 27, 1],
+					"rotation": [3.96713, -14.47751, -33.00409],
+					"cubes": [
+						{"origin": [3, 25.5, 0], "size": [10, 3, 2], "uv": [44, 41]}
+					]
+				},
+				{
+					"name": "bone3",
+					"parent": "Leftwing",
+					"pivot": [6, 22, 1],
+					"cubes": [
+						{"origin": [-3, 15, 1.01], "size": [14, 11, 0], "uv": [0, 26]}
+					]
+				},
+				{
+					"name": "WokeleftCommies",
+					"parent": "Leftwing",
+					"pivot": [11, 27, 1],
+					"rotation": [0, 0, 72.5],
+					"cubes": [
+						{"origin": [12, 26, 0.5], "size": [13, 2, 1], "uv": [40, 35]}
+					]
+				},
+				{
+					"name": "bone4",
+					"parent": "WokeleftCommies",
+					"pivot": [13, 22, 1],
+					"cubes": [
+						{"origin": [10, 13, 1], "size": [14, 13, 0], "uv": [0, 13]}
+					]
+				},
+				{
+					"name": "Rightleg",
+					"parent": "Body",
+					"pivot": [-1.5, 16, 0.5],
+					"rotation": [-5, 0, 2.5],
+					"cubes": [
+						{"origin": [-3.5, 0, -1], "size": [3, 16, 3], "uv": [28, 22]},
+						{"origin": [-4, 1, -1.5], "size": [4, 9, 4], "uv": [12, 37]}
+					]
+				},
+				{
+					"name": "Leftleg",
+					"parent": "Body",
+					"pivot": [1.5, 16, 0.5],
+					"rotation": [-5, 0, -2.5],
+					"cubes": [
+						{"origin": [0.5, 0, -1], "size": [3, 16, 3], "uv": [0, 37]},
+						{"origin": [0, 1, -1.5], "size": [4, 9, 4], "uv": [28, 41]}
+					]
+				}
+			]
+		}
+	]
+}
