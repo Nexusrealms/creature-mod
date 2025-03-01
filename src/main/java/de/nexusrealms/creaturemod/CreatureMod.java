@@ -11,6 +11,7 @@ import de.nexusrealms.creaturemod.items.ModItems;
 import de.nexusrealms.creaturemod.magic.element.Elements;
 import de.nexusrealms.creaturemod.magic.flow.FlowCostType;
 import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffectType;
+import de.nexusrealms.creaturemod.network.ModPackets;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.util.Identifier;
@@ -43,6 +44,7 @@ public class CreatureMod implements ModInitializer {
 
 		ModItemGroups.init();
 		ModCommands.init();
+		ModPackets.init();
 		ModBlocks.init();
 		ModItems.init();
 		ModActivities.init();

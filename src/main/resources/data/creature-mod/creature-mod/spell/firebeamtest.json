@@ -1,0 +1,18 @@
+{
+  "flowCost": {
+    "type": "creature-mod:simple",
+    "flowUnit": {
+      "element": "creature-mod:fire",
+      "value": 100
+    }
+  },
+  "rootEffect": {
+    "type": "creature-mod:forward_beam",
+    "color": 16736512
+  },
+  "description": {
+    "translate": "spell.creature-mod.test"
+  },
+  "incantation": "A bude ohen test",
+  "castOnClient": true
+}

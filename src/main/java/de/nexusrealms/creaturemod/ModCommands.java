@@ -8,7 +8,6 @@ import de.nexusrealms.creaturemod.curses.CurseInstance;
 import de.nexusrealms.creaturemod.curses.Curses;
 import de.nexusrealms.creaturemod.curses.TherianthropyCurse;
 import de.nexusrealms.creaturemod.items.ModItemComponents;
-import de.nexusrealms.creaturemod.magic.MagicUtils;
 import de.nexusrealms.creaturemod.magic.flow.FlowStorage;
 import de.nexusrealms.creaturemod.magic.flow.FlowUnit;
 import de.nexusrealms.creaturemod.magic.spell.Incantation;
@@ -106,12 +105,8 @@ public class ModCommands {
                 commandDispatcher.register(literal("flowdump")
                         .requires(ServerCommandSource::isExecutedByPlayer)
                         .executes(commandContext -> {
-                            try {
-                                commandContext.getSource().sendFeedback(() -> Text.literal(FlowStorage.getFlowStorage(commandContext.getSource().getPlayer()).dumpFlow()), false);
-                            } catch (Exception e){
-                                e.printStackTrace();
-                            }
-                            return 1;
+                            commandContext.getSource().sendFeedback(() -> Text.literal(FlowStorage.getFlowStorage(commandContext.getSource().getPlayer()).dumpFlow()), false);
+                            return  1;
                         }));
             }
             commandDispatcher.register(literal("flow")
@@ -147,7 +142,7 @@ public class ModCommands {
                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
                             .executes(commandContext -> {
                                 RegistryEntry<Spell> spell = RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "spell", ModRegistries.Keys.SPELLS);
-                                spell.value().cast(commandContext.getSource().getPlayer(), null, null);
+                                spell.value().castServer(commandContext.getSource().getPlayer(), null, null);
                                 commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", spell.getIdAsString()), false);
                                 return 1;
                             })));
@@ -158,7 +153,7 @@ public class ModCommands {
                                 String words = StringArgumentType.getString(commandContext, "words");
                                 Optional<RegistryEntry<Spell>> optionalSpell = Incantation.lookup(commandRegistryAccess, words);
                                 if(optionalSpell.isPresent()){
-                                    optionalSpell.get().value().cast(commandContext.getSource().getPlayer(), null, null);
+                                    optionalSpell.get().value().castServer(commandContext.getSource().getPlayer(), null, null);
                                     commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", optionalSpell.get().getIdAsString()), false);
                                 } else {
                                     commandContext.getSource().sendError(Text.translatable("message.creature-mod.spell.notfound", words));

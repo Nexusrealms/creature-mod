@@ -5,8 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffect;
 import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffectType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
 public record GiveItemEffect(ItemStack stack) implements SpellEffect<Entity> {
@@ -21,7 +21,7 @@ public record GiveItemEffect(ItemStack stack) implements SpellEffect<Entity> {
     }
 
     @Override
-    public boolean apply(ServerPlayerEntity caster, Entity entity, @Nullable ItemStack castingItem, @Nullable Entity clickTarget) {
+    public boolean apply(PlayerEntity caster, Entity entity, @Nullable ItemStack castingItem, @Nullable Entity clickTarget) {
         caster.giveItemStack(stack.copy());
         return true;
     }

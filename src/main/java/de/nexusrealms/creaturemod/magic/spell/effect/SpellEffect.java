@@ -3,6 +3,7 @@ package de.nexusrealms.creaturemod.magic.spell.effect;
 import com.mojang.serialization.Codec;
 import de.nexusrealms.creaturemod.ModRegistries;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
@@ -15,6 +16,6 @@ public interface SpellEffect<T> {
             .dispatch("type", SpellEffect::getType, SpellEffectType::codec);
 
     SpellEffectType<? extends SpellEffect<T>> getType();
-    boolean apply(ServerPlayerEntity origin, T target,  @Nullable ItemStack castingItem, @Nullable Entity clickTarget);
+    boolean apply(PlayerEntity origin, T target, @Nullable ItemStack castingItem, @Nullable Entity clickTarget);
 
 }
