@@ -119,7 +119,7 @@ public class WerebatEntity extends TherianthropeEntity implements SmartBrainOwne
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "Transforming", 0, state -> PlayState.CONTINUE).triggerableAnim("Transform", TRANSFORM));
-        controllers.add(new AnimationController<>(this, "Moving", 0, state ->
+        controllers.add(new AnimationController<>(this, "Moving", 5, state ->
         {
             if(state.isMoving()){
                 return state.setAndContinue(CHASE);
@@ -128,7 +128,7 @@ public class WerebatEntity extends TherianthropeEntity implements SmartBrainOwne
             }
         }
         ));
-        controllers.add(new AnimationController<>(this, "Attacking", 0, state -> PlayState.CONTINUE).triggerableAnim("Attack", ATTACK));
+        controllers.add(new AnimationController<>(this, "Attacking", 5, state -> PlayState.CONTINUE).triggerableAnim("Attack", ATTACK));
     }
 
     @Override

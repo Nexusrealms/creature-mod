@@ -110,12 +110,12 @@ public class WerecatEntity extends TherianthropeEntity implements SmartBrainOwne
         return BrainActivityGroup.fightTasks(
                 new InvalidateAttackTarget<>(), // Cancel fighting if the target is no longer valid
                 new SetWalkTargetToAttackTarget<>(),
-                new AnimatableMeleeAttack<>(40)); // Melee attack the target if close enough
+                new AnimatableMeleeAttack<>(10)); // Melee attack the target if close enough
     }
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "Transforming", 0, state -> PlayState.CONTINUE).triggerableAnim("Transform", TRANSFORM));
-        controllers.add(new AnimationController<>(this, "Moving", 0, state ->
+        controllers.add(new AnimationController<>(this, "Moving", 5, state ->
         {
             if(state.isMoving()){
                 if(state.getAnimatable().getVelocity().length() > 0.1){
