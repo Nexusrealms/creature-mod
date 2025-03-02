@@ -14,16 +14,11 @@ public interface FlowStorage {
     String dumpFlow();
     boolean drainFlow(FlowUnit flowUnit);
     boolean canDrain(FlowUnit flowUnit);
-
-    static Optional<FlowStorage> getPreferredFlowStorage(PlayerEntity player){
-        if(MagicUtils.shouldDoSorcery(player)) return Optional.of(player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE));
-        return Optional.empty();
-    }
     static FlowStorage getFlowStorage(PlayerEntity player){
         if(MagicUtils.shouldDoSorcery(player)){
-            return new Dual(player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE), ((InventoryFlowStorageProvider) player).getInventoryFlowStorage());
+            return new Dual(player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE), player.getInventoryFlowStorage());
         } else {
-            return ((InventoryFlowStorageProvider) player).getInventoryFlowStorage();
+            return player.getInventoryFlowStorage();
         }
     }
     class None implements FlowStorage{

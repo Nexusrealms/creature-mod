@@ -47,6 +47,7 @@ public class InventoryFlowStorage implements FlowStorage{
         }).findFirst();
         if(itemStack.isPresent()){
             itemStack.get().apply(ModItemComponents.STORED_FLOW, new FlowUnit.Immutable(flow.getElement(), 0),flow, FlowUnit::combine);
+            cacheFlowUnits();
             return true;
         }
         return false;
@@ -70,8 +71,10 @@ public class InventoryFlowStorage implements FlowStorage{
     public boolean drainFlow(FlowUnit flowUnit) {
         if(canDrain(flowUnit)){
             if(drainFlowFromItem(playerInventory.getMainHandStack(), flowUnit)){
+                cacheFlowUnits();
                 return true;
             } else if (drainFlowFromItem(playerInventory.offHand.getFirst(), flowUnit)){
+                cacheFlowUnits();
                 return true;
             } else {
                 List<ItemStack> list = getAllStacks();
@@ -87,6 +90,7 @@ public class InventoryFlowStorage implements FlowStorage{
                         flowToDrain -= storedFlow;
                     } else {
                         stack.set(ModItemComponents.STORED_FLOW, new FlowUnit.Immutable(flowUnit.getElement(), storedFlow - flowToDrain));
+                        cacheFlowUnits();
                         return true;
                     }
                 }
