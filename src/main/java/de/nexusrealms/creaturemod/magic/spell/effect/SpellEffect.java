@@ -2,6 +2,7 @@ package de.nexusrealms.creaturemod.magic.spell.effect;
 
 import com.mojang.serialization.Codec;
 import de.nexusrealms.creaturemod.ModRegistries;
+import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,8 @@ public interface SpellEffect<T> {
             .dispatch("type", SpellEffect::getType, SpellEffectType::codec);
     Codec<SpellEffect<World>> WORLD_CODEC = ModRegistries.WORLD_SPELL_EFFECTS.getCodec()
             .dispatch("type", SpellEffect::getType, SpellEffectType::codec);
-
+    Codec<SpellEffect<CachedBlockPosition>> BLOCK_CODEC = ModRegistries.BLOCK_SPELL_EFFECTS.getCodec()
+            .dispatch("type", SpellEffect::getType, SpellEffectType::codec);
     SpellEffectType<? extends SpellEffect<T>> getType();
     boolean apply(PlayerEntity origin, T target, @Nullable ItemStack castingItem, @Nullable Entity clickTarget);
 

@@ -8,9 +8,11 @@ import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffect;
 import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffectType;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.math.BlockPointer;
 import net.minecraft.world.World;
 
 public class ModRegistries {
@@ -18,6 +20,7 @@ public class ModRegistries {
     public static final Registry<Element> ELEMENTS = createSimple(Keys.ELEMENTS);
     public static final Registry<SpellEffectType<? extends SpellEffect<Entity>>> ENTITY_SPELL_EFFECTS = createSimple(Keys.ENTITY_SPELL_EFFECTS);
     public static final Registry<SpellEffectType<? extends SpellEffect<World>>> WORLD_SPELL_EFFECTS = createSimple(Keys.WORLD_SPELL_EFFECTS);
+    public static final Registry<SpellEffectType<? extends SpellEffect<CachedBlockPosition>>> BLOCK_SPELL_EFFECTS = createSimple(Keys.BLOCK_SPELL_EFFECTS);
     public static final Registry<FlowCostType<?>> FLOW_COST_TYPES = createSimple(Keys.FLOW_COST_TYPES);
 
 
@@ -32,6 +35,7 @@ public class ModRegistries {
         public static final RegistryKey<Registry<Element>> ELEMENTS = create("element");
         public static final RegistryKey<Registry<SpellEffectType<? extends SpellEffect<Entity>>>> ENTITY_SPELL_EFFECTS = create("entity_spell_effects");
         public static final RegistryKey<Registry<SpellEffectType<? extends SpellEffect<World>>>> WORLD_SPELL_EFFECTS = create("world_spell_effects");
+        public static final RegistryKey<Registry<SpellEffectType<? extends SpellEffect<CachedBlockPosition>>>> BLOCK_SPELL_EFFECTS = create("block_spell_effects");
         public static final RegistryKey<Registry<FlowCostType<?>>> FLOW_COST_TYPES = create("flow_cost_type");
 
         public static final RegistryKey<Registry<Spell>> SPELLS = create("spell");
