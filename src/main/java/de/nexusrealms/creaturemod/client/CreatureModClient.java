@@ -38,6 +38,7 @@ public class CreatureModClient implements ClientModInitializer {
                 ctx -> new WaterElementalRenderer<>(ctx, new SingleVariantGeoEntityModel<>("water_elemental")));
         registerSimpleEntityRenderer(ModEntities.WERECAT);
         registerSimpleEntityRenderer(ModEntities.WEREBAT);
+        registerEmptyEntityRenderer(ModEntities.LAUNCHED_SPELL);
 
     }
     private void initItemColors(){

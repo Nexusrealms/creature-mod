@@ -1,0 +1,49 @@
+{
+  "flowCost": {
+    "type": "creature-mod:all",
+    "list": [
+      {
+        "type": "creature-mod:simple",
+        "flowUnit": {
+          "element": "creature-mod:fire",
+          "value": 200
+        }
+      },
+      {
+        "type": "creature-mod:simple",
+        "flowUnit": {
+          "element": "creature-mod:water",
+          "value": 200
+        }
+      },
+      {
+        "type": "creature-mod:simple",
+        "flowUnit": {
+          "element": "creature-mod:air",
+          "value": 200
+        }
+      }
+    ]
+  },
+  "rootEffect": {
+    "type": "creature-mod:launch_spell",
+    "emitter": "creature-mod:air_elemental_body",
+    "blockHitEffect": {
+      "type": "creature-mod:lightning_strike"
+    },
+    "entityHitEffect": {
+      "type": "creature-mod:apply_to_block",
+      "effect": {
+        "type": "creature-mod:lightning_strike"
+      }
+    }
+  },
+  "description": {
+    "translate": "spell.creature-mod.test"
+  },
+  "incantation": "Vasai scaala nik en",
+  "delay": 100,
+  "useBindData": {
+    "itemCooldown": 100
+  }
+}
