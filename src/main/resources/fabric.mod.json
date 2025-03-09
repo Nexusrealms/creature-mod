@@ -48,7 +48,8 @@
 		"cardinal-components": [
 			"creature-mod:curses",
 			"creature-mod:therianthropy",
-			"creature-mod:player_flow_storage"
+			"creature-mod:player_flow_storage",
+			"creature-mod:cast_delay"
 
 		],
 		"loom:injected_interfaces": {

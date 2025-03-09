@@ -1,6 +1,6 @@
 {
   "flowCost": {
-    "type": "creature-mod:all",
+    "type": "creature-mod:any",
     "list": [
       {
         "type": "creature-mod:simple",
@@ -28,5 +28,6 @@
   "description": {
     "translate": "spell.creature-mod.test"
   },
-  "incantation": "A bude test"
+  "incantation": "A bude test",
+  "delay": 100
 }

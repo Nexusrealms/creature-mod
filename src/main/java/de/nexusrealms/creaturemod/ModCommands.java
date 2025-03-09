@@ -142,18 +142,22 @@ public class ModCommands {
                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
                             .executes(commandContext -> {
                                 RegistryEntry<Spell> spell = RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "spell", ModRegistries.Keys.SPELLS);
-                                spell.value().castServer(commandContext.getSource().getPlayer(), null, null);
+                                Spell.castDirect(commandContext.getSource().getPlayer(), spell);
                                 commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", spell.getIdAsString()), false);
                                 return 1;
                             })));
             commandDispatcher.register(literal("incantation")
                     .then(argument("words", StringArgumentType.string())
+                            .suggests((commandContext, suggestionsBuilder) -> {
+                                commandRegistryAccess.getWrapperOrThrow(ModRegistries.Keys.SPELLS).streamEntries().map(r -> r.value().incantation().words()).forEach(suggestionsBuilder::suggest);
+                                return suggestionsBuilder.buildFuture();
+                            })
                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
                             .executes(commandContext -> {
                                 String words = StringArgumentType.getString(commandContext, "words");
                                 Optional<RegistryEntry<Spell>> optionalSpell = Incantation.lookup(commandRegistryAccess, words);
                                 if(optionalSpell.isPresent()){
-                                    optionalSpell.get().value().castServer(commandContext.getSource().getPlayer(), null, null);
+                                    Spell.castDirect(commandContext.getSource().getPlayer(), optionalSpell.get());
                                     commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", optionalSpell.get().getIdAsString()), false);
                                 } else {
                                     commandContext.getSource().sendError(Text.translatable("message.creature-mod.spell.notfound", words));
