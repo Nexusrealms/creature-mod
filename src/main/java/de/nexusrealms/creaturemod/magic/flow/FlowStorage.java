@@ -15,13 +15,17 @@ public interface FlowStorage {
     boolean drainFlow(FlowUnit flowUnit);
     boolean canDrain(FlowUnit flowUnit);
     static FlowStorage getFlowStorage(PlayerEntity player){
-        if(MagicUtils.shouldDoSorcery(player)){
+        if(player.isCreative()){
+            return new Dual(new Creative(), player.getInventoryFlowStorage());
+        }
+        else if(MagicUtils.shouldDoSorcery(player)){
             return new Dual(player.getComponent(ModEntityComponents.PLAYER_FLOW_STORAGE), player.getInventoryFlowStorage());
         } else {
             return player.getInventoryFlowStorage();
         }
     }
-    class None implements FlowStorage{
+
+    class Creative implements FlowStorage{
 
         @Override
         public boolean addFlow(FlowUnit flow) {
@@ -30,22 +34,22 @@ public interface FlowStorage {
 
         @Override
         public FlowUnit getFlow(RegistryEntry<Element> elementRegistryEntry) {
-            return new FlowUnit.Immutable(elementRegistryEntry, 0);
+            return new FlowUnit.Immutable(elementRegistryEntry, 100000);
         }
 
         @Override
         public String dumpFlow() {
-            return "No flow here ;)";
+            return "Creative flow";
         }
 
         @Override
         public boolean drainFlow(FlowUnit flowUnit) {
-            return false;
+            return true;
         }
 
         @Override
         public boolean canDrain(FlowUnit flowUnit) {
-            return false;
+            return true;
         }
     }
     record Dual(FlowStorage primary, FlowStorage secondary) implements FlowStorage{

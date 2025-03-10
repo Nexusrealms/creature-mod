@@ -27,7 +27,7 @@
   },
   "rootEffect": {
     "type": "creature-mod:launch_spell",
-    "emitter": "creature-mod:air_elemental_body",
+    "emitter": "creature-mod:flying_air_spell",
     "blockHitEffect": {
       "type": "creature-mod:lightning_strike"
     },

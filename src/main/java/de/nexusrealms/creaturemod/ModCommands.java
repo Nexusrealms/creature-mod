@@ -149,7 +149,7 @@ public class ModCommands {
             commandDispatcher.register(literal("incantation")
                     .then(argument("words", StringArgumentType.string())
                             .suggests((commandContext, suggestionsBuilder) -> {
-                                commandRegistryAccess.getWrapperOrThrow(ModRegistries.Keys.SPELLS).streamEntries().map(r -> r.value().incantation().words()).forEach(suggestionsBuilder::suggest);
+                                commandRegistryAccess.getWrapperOrThrow(ModRegistries.Keys.SPELLS).streamEntries().map(r -> '"' + r.value().incantation().words() + '"').forEach(suggestionsBuilder::suggest);
                                 return suggestionsBuilder.buildFuture();
                             })
                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
