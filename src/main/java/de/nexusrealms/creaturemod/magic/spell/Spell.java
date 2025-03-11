@@ -51,8 +51,8 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
             SoundEvent.CODEC.optionalFieldOf("castingSound").forGetter(Spell::soundEvent),
             Incantation.CODEC.fieldOf("incantation").forGetter(Spell::incantation),
             Codec.BOOL.optionalFieldOf("castOnClient", false).forGetter(Spell::castOnClient),
-            BindData.CODEC.optionalFieldOf("useBindData", new BindData(false, -1, Optional.empty(), new Incantation.WordsAddition("", ""), ItemPredicate.Builder.create().build(), 0)).forGetter(Spell::useBindData),
-            BindData.CODEC.optionalFieldOf("attackBindData", new BindData(false, -1, Optional.empty(), new Incantation.WordsAddition("", ""), ItemPredicate.Builder.create().build(), 0)).forGetter(Spell::useBindData),
+            BindData.CODEC.optionalFieldOf("useBindData", new BindData(false, -1, Optional.empty(), new Incantation.WordsAddition("", ""), ItemPredicate.Builder.create().build(), 0, new FlowCost.None())).forGetter(Spell::useBindData),
+            BindData.CODEC.optionalFieldOf("attackBindData", new BindData(false, -1, Optional.empty(), new Incantation.WordsAddition("", ""), ItemPredicate.Builder.create().build(), 0, new FlowCost.None())).forGetter(Spell::useBindData),
             Codec.INT.optionalFieldOf("delay", 0).forGetter(Spell::delay)
     ).apply(instance, Spell::new));
 
@@ -86,21 +86,28 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
         return false;
     }
     public static TypedActionResult<ItemStack> castUse(ServerPlayerEntity caster, RegistryEntry<Spell> spellRegistryEntry, ItemStack stack, @Nullable Entity clickTarget){
-        Spell spell = spellRegistryEntry.value();
-        BindData data = spell.useBindData();
-        if(data.bindable()){
+        BindData data = spellRegistryEntry.value().useBindData();
+        return castBound(spellRegistryEntry, data, caster, stack, clickTarget);
+    }
+    public static TypedActionResult<ItemStack> castAttack(ServerPlayerEntity caster, RegistryEntry<Spell> spellRegistryEntry, ItemStack stack, Entity clickTarget){
+        BindData data = spellRegistryEntry.value().attackBindData();
+        return castBound(spellRegistryEntry, data, caster, stack, clickTarget);
+    }
+    private static TypedActionResult<ItemStack> castBound(RegistryEntry<Spell> spellRegistryEntry, BindData bindData, ServerPlayerEntity caster, ItemStack stack, @Nullable Entity clickTarget){
+        if(bindData.bindable()){
             CastDelayComponent component = caster.getComponent(ModEntityComponents.CAST_DELAY_COMPONENT);
             if(!spellRegistryEntry.hasKeyAndValue()) {
-                CreatureMod.LOGGER.error("Invalid spell cast using item!");
+                CreatureMod.LOGGER.error("Invalid spell cast using item during attack!");
                 return TypedActionResult.fail(stack);
             }
+            Spell spell = spellRegistryEntry.value();
             if(component.isReady(spellRegistryEntry.getKey().get())){
-                if(spellRegistryEntry.value().castServer(caster, stack, clickTarget)){
-                    int delay = data.delayOverride() >= 0 ? data.delayOverride() : spellRegistryEntry.value().delay();
+                if(spell.castServer(caster, stack, clickTarget)){
+                    int delay = bindData.delayOverride() >= 0 ? bindData.delayOverride() : spellRegistryEntry.value().delay();
                     if(delay > 0){
                         component.addDelay(spellRegistryEntry.getKey().get(), delay);
                     }
-                    int itemDelay = data.itemCooldown();
+                    int itemDelay = bindData.itemCooldown();
                     if(itemDelay > 0){
                         caster.getItemCooldownManager().set(stack.getItem(), itemDelay);
                     }
@@ -123,20 +130,24 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
         TagKey<Item> tag = isAttackBind ? ModTags.ATTACK_BINDABLE : ModTags.USE_BINDABLE;
         ItemStack stack = player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? player.getStackInHand(Hand.OFF_HAND) : player.getStackInHand(Hand.MAIN_HAND);
         if(stack.isIn(tag)){
-            Bind bind = new Bind(spellRegistryEntry);
-            stack.set(isAttackBind ? ModItemComponents.ATTACK_BIND : ModItemComponents.USE_BIND, bind);
-            return true;
+            BindData bindData = isAttackBind ? spellRegistryEntry.value().attackBindData() : spellRegistryEntry.value().useBindData();
+            if (bindData.bindCost().drain(FlowStorage.getFlowStorage(player))){
+                Bind bind = new Bind(spellRegistryEntry);
+                stack.set(isAttackBind ? ModItemComponents.ATTACK_BIND : ModItemComponents.USE_BIND, bind);
+                return true;
+            }
         }
         return false;
     }
-    public record BindData(boolean bindable, int delayOverride, Optional<String> invocationOverride, Incantation.WordsAddition addition, ItemPredicate bindablePredicate, int itemCooldown){
+    public record BindData(boolean bindable, int delayOverride, Optional<String> invocationOverride, Incantation.WordsAddition addition, ItemPredicate bindablePredicate, int itemCooldown, FlowCost bindCost){
         public static final Codec<BindData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.BOOL.optionalFieldOf("bindable", true).forGetter(BindData::bindable),
                 Codec.INT.optionalFieldOf("delayOverride", -1).forGetter(BindData::delayOverride),
                 Codec.STRING.optionalFieldOf("invocationOverride").forGetter(BindData::invocationOverride),
                 Incantation.WordsAddition.CODEC.optionalFieldOf("wordsAddition", new Incantation.WordsAddition("In ", " nilir")).forGetter(BindData::addition),
                 ItemPredicate.CODEC.optionalFieldOf("predicate", ItemPredicate.Builder.create().build()).forGetter(BindData::bindablePredicate),
-                Codec.INT.optionalFieldOf("itemCooldown", 0).forGetter(BindData::itemCooldown)
+                Codec.INT.optionalFieldOf("itemCooldown", 0).forGetter(BindData::itemCooldown),
+                FlowCost.CODEC.optionalFieldOf("bindCost", new FlowCost.None()).forGetter(BindData::bindCost)
         ).apply(instance, BindData::new));
     }
     public record Bind(RegistryEntry<Spell> spell){

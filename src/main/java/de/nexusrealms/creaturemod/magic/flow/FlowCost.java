@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.nexusrealms.creaturemod.ModRegistries;
+import org.intellij.lang.annotations.Flow;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,23 @@ public interface FlowCost {
         @Override
         public boolean canDrain(FlowStorage flowStorage) {
             return flowStorage.canDrain(flowUnit);
+        }
+    }
+    class None implements FlowCost{
+
+        @Override
+        public FlowCostType<?> getType() {
+            return FlowCostType.NONE;
+        }
+
+        @Override
+        public boolean drain(FlowStorage flowStorage) {
+            return true;
+        }
+
+        @Override
+        public boolean canDrain(FlowStorage flowStorage) {
+            return true;
         }
     }
     record All(List<FlowCost> list) implements FlowCost {

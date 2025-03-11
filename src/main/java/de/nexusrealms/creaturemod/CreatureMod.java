@@ -16,6 +16,7 @@ import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffectType;
 import de.nexusrealms.creaturemod.network.ModPackets;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.ItemStack;
@@ -84,6 +85,18 @@ public class CreatureMod implements ModInitializer {
 					if(stack.contains(ModItemComponents.USE_BIND)){
 						RegistryEntry<Spell> spellRegistryEntry = stack.get(ModItemComponents.USE_BIND).spell();
 						return Spell.castUse(player, spellRegistryEntry, stack, entity).getResult();
+					}
+				}
+			}
+			return TypedActionResult.pass(stack).getResult();
+		});
+		AttackEntityCallback.EVENT.register((playerEntity, world, hand, entity, entityHitResult) -> {
+			ItemStack stack = playerEntity.getStackInHand(hand);
+			if(playerEntity instanceof ServerPlayerEntity player){
+				if(stack.isIn(ModTags.ATTACK_BINDABLE)){
+					if(stack.contains(ModItemComponents.ATTACK_BIND)){
+						RegistryEntry<Spell> spellRegistryEntry = stack.get(ModItemComponents.ATTACK_BIND).spell();
+						return Spell.castAttack(player, spellRegistryEntry, stack, entity).getResult();
 					}
 				}
 			}

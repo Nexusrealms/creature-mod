@@ -38,8 +38,11 @@
     "translate": "spell.creature-mod.test"
   },
   "incantation": "Vasai scaala nik en",
-  "delay": 100,
-  "useBindData": {
-    "itemCooldown": 100
+
+  "attackBindData": {
+    "wordsAddition": {
+      "prefix": "In li ",
+      "suffix": " deenir"
+    }
   }
 }

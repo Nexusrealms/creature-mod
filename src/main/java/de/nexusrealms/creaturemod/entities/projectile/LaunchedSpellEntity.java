@@ -18,12 +18,14 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class LaunchedSpellEntity extends ExplosiveProjectileEntity {
     //Yeah this is definitely not the best way
@@ -51,6 +53,17 @@ public class LaunchedSpellEntity extends ExplosiveProjectileEntity {
             }
         }
     }
+
+    @Override
+    protected @Nullable ParticleEffect getParticleType() {
+        return null;
+    }
+
+    @Override
+    protected boolean isBurning() {
+        return false;
+    }
+
     public void setData(Entity summonAt, Identifier emitter, LaunchSpellEffect launchEffect, ItemStack castItem){
         refreshPositionAndAngles(summonAt.getEyePos(), summonAt.getYaw(), summonAt.getPitch());
         refreshPosition();

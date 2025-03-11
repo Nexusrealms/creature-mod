@@ -20,6 +20,6 @@ public class ItemTagProvider extends FabricTagProvider<Item> {
         getOrCreateTagBuilder(ModTags.USE_BINDABLE)
                 .add(Items.STICK);
         getOrCreateTagBuilder(ModTags.ATTACK_BINDABLE)
-                .add(Items.BLAZE_ROD);
+                .add(Items.DIAMOND_SWORD);
     }
 }
