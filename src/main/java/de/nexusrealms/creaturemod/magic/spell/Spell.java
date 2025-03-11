@@ -5,6 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.ModEntityComponents;
 import de.nexusrealms.creaturemod.ModRegistries;
+import de.nexusrealms.creaturemod.ModTags;
+import de.nexusrealms.creaturemod.items.ModItemComponents;
 import de.nexusrealms.creaturemod.magic.flow.FlowCost;
 import de.nexusrealms.creaturemod.magic.flow.FlowStorage;
 import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffect;
@@ -17,6 +19,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -25,11 +28,13 @@ import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryFixedCodec;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
+import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,8 +51,8 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
             SoundEvent.CODEC.optionalFieldOf("castingSound").forGetter(Spell::soundEvent),
             Incantation.CODEC.fieldOf("incantation").forGetter(Spell::incantation),
             Codec.BOOL.optionalFieldOf("castOnClient", false).forGetter(Spell::castOnClient),
-            BindData.CODEC.optionalFieldOf("useBindData", new BindData(false, -1, Optional.empty(), "", ItemPredicate.Builder.create().build(), 0)).forGetter(Spell::useBindData),
-            BindData.CODEC.optionalFieldOf("attackBindData", new BindData(false, -1, Optional.empty(), "", ItemPredicate.Builder.create().build(), 0)).forGetter(Spell::useBindData),
+            BindData.CODEC.optionalFieldOf("useBindData", new BindData(false, -1, Optional.empty(), new Incantation.WordsAddition("", ""), ItemPredicate.Builder.create().build(), 0)).forGetter(Spell::useBindData),
+            BindData.CODEC.optionalFieldOf("attackBindData", new BindData(false, -1, Optional.empty(), new Incantation.WordsAddition("", ""), ItemPredicate.Builder.create().build(), 0)).forGetter(Spell::useBindData),
             Codec.INT.optionalFieldOf("delay", 0).forGetter(Spell::delay)
     ).apply(instance, Spell::new));
 
@@ -108,12 +113,28 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
     public void castClient(PlayerEntity caster, @Nullable ItemStack castingItem, @Nullable Entity clickTarget){
         rootEffect.apply(caster, caster, castingItem, clickTarget);
     }
-    public record BindData(boolean bindable, int delayOverride, Optional<String> invocationOverride, String invocationPrefix, ItemPredicate bindablePredicate, int itemCooldown){
+    public boolean matchesUseBind(String words){
+        return incantation.matches(words, useBindData.addition);
+    }
+    public boolean matchesAttackBind(String words){
+        return incantation.matches(words, attackBindData.addition);
+    }
+    public static boolean bind(ServerPlayerEntity player, RegistryEntry<Spell> spellRegistryEntry, boolean isAttackBind){
+        TagKey<Item> tag = isAttackBind ? ModTags.ATTACK_BINDABLE : ModTags.USE_BINDABLE;
+        ItemStack stack = player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? player.getStackInHand(Hand.OFF_HAND) : player.getStackInHand(Hand.MAIN_HAND);
+        if(stack.isIn(tag)){
+            Bind bind = new Bind(spellRegistryEntry);
+            stack.set(isAttackBind ? ModItemComponents.ATTACK_BIND : ModItemComponents.USE_BIND, bind);
+            return true;
+        }
+        return false;
+    }
+    public record BindData(boolean bindable, int delayOverride, Optional<String> invocationOverride, Incantation.WordsAddition addition, ItemPredicate bindablePredicate, int itemCooldown){
         public static final Codec<BindData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.BOOL.optionalFieldOf("bindable", true).forGetter(BindData::bindable),
                 Codec.INT.optionalFieldOf("delayOverride", -1).forGetter(BindData::delayOverride),
                 Codec.STRING.optionalFieldOf("invocationOverride").forGetter(BindData::invocationOverride),
-                Codec.STRING.optionalFieldOf("invocationPrefix", "Vai").forGetter(BindData::invocationPrefix),
+                Incantation.WordsAddition.CODEC.optionalFieldOf("wordsAddition", new Incantation.WordsAddition("In ", " nilir")).forGetter(BindData::addition),
                 ItemPredicate.CODEC.optionalFieldOf("predicate", ItemPredicate.Builder.create().build()).forGetter(BindData::bindablePredicate),
                 Codec.INT.optionalFieldOf("itemCooldown", 0).forGetter(BindData::itemCooldown)
         ).apply(instance, BindData::new));

@@ -155,12 +155,10 @@ public class ModCommands {
                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
                             .executes(commandContext -> {
                                 String words = StringArgumentType.getString(commandContext, "words");
-                                Optional<RegistryEntry<Spell>> optionalSpell = Incantation.lookup(commandRegistryAccess, words);
-                                if(optionalSpell.isPresent()){
-                                    Spell.castDirect(commandContext.getSource().getPlayer(), optionalSpell.get());
-                                    commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.spell.cast", optionalSpell.get().getIdAsString()), false);
+                                if(Incantation.process(commandContext.getSource().getPlayer(), commandRegistryAccess, words)){
+                                    commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.incantation.success", words), false);
                                 } else {
-                                    commandContext.getSource().sendError(Text.translatable("message.creature-mod.spell.notfound", words));
+                                    commandContext.getSource().sendError(Text.translatable("message.creature-mod.incantation.failure", words));
                                 }
                                 return 1;
                             })));

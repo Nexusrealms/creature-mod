@@ -41,7 +41,7 @@
   "description": {
     "translate": "spell.creature-mod.test"
   },
-  "incantation": "Vasai scaala nik en",
+  "incantation": "Vasai scaala",
   "delay": 100,
   "useBindData": {
     "itemCooldown": 100
