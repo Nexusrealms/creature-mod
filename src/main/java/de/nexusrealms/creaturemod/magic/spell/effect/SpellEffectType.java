@@ -18,6 +18,7 @@ public record SpellEffectType<T extends SpellEffect<?>>(MapCodec<T> codec) {
     public static final SpellEffectType<ApplyToClickTargetEffect> APPLY_TO_CLICK_TARGET = createEntity("apply_to_click_target", ApplyToClickTargetEffect.CODEC);
     public static final SpellEffectType<ApplyToBlockEffect> APPLY_TO_BLOCK = createEntity("apply_to_block", ApplyToBlockEffect.CODEC);
     public static final SpellEffectType<LaunchSpellEffect> LAUNCH_SPELL = createEntity("launch_spell", LaunchSpellEffect.CODEC);
+    public static final SpellEffectType<SetFireTicksEffect> SET_FIRE_TICKS = createEntity("set_fire_ticks", SetFireTicksEffect.CODEC);
 
     public static final SpellEffectType<ChangeDaytimeEffect> CHANGE_TIME = createWorld("change_time", ChangeDaytimeEffect.CODEC);
 

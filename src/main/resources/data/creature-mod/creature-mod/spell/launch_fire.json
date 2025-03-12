@@ -1,0 +1,31 @@
+{
+  "flowCost": {
+    "type": "creature-mod:all",
+    "list": [
+      {
+        "type": "creature-mod:simple",
+        "flowUnit": {
+          "element": "creature-mod:fire",
+          "value": 200
+        }
+      }
+    ]
+  },
+  "rootEffect": {
+    "type": "creature-mod:launch_spell",
+    "emitter": "creature-mod:flying_fire_spell",
+    "entityHitEffect": {
+      "type": "creature-mod:set_fire_ticks",
+      "fireTicks": 1000,
+      "fromLava": true
+    }
+  },
+  "description": {
+    "translate": "spell.creature-mod.test"
+  },
+  "incantation": "Vasai pyroth",
+  "delay": 100,
+  "useBindData": {
+    "itemCooldown": 100
+  }
+}

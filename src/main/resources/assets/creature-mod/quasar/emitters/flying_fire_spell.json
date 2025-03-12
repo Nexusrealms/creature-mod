@@ -1,0 +1,78 @@
+{
+  "max_lifetime": 10,
+  "loop": true,
+  "rate": 1,
+  "count": 16,
+  "emitter_settings": {
+    "shape": {
+      "shape": "veil:sphere",
+      "dimensions": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "from_surface": false
+    },
+    "particle_settings": {
+      "random_speed": false,
+      "random_size": true,
+      "random_lifetime": true,
+      "initial_direction": [
+        0.1,
+        0.0,
+        0.0
+      ],
+      "random_initial_direction": false,
+      "random_initial_rotation": true,
+      "particle_size_variation": 0.0075,
+      "particle_lifetime": 10,
+      "particle_lifetime_variation": 5,
+      "particle_speed": 0.01,
+      "base_particle_size": 0.02
+    },
+    "force_spawn": true
+  },
+  "particle_data": "creature-mod:fire_element_cube"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
