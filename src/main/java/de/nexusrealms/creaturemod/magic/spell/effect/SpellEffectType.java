@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec;
 import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.ModRegistries;
 import de.nexusrealms.creaturemod.magic.spell.effect.block.LightningStrikeEffect;
+import de.nexusrealms.creaturemod.magic.spell.effect.block.OffsetInDirection;
+import de.nexusrealms.creaturemod.magic.spell.effect.block.SetOnFire;
 import de.nexusrealms.creaturemod.magic.spell.effect.entity.*;
 import de.nexusrealms.creaturemod.magic.spell.effect.world.ChangeDaytimeEffect;
 import net.minecraft.block.pattern.CachedBlockPosition;
@@ -22,6 +24,8 @@ public record SpellEffectType<T extends SpellEffect<?>>(MapCodec<T> codec) {
 
     public static final SpellEffectType<ChangeDaytimeEffect> CHANGE_TIME = createWorld("change_time", ChangeDaytimeEffect.CODEC);
 
+    public static final SpellEffectType<SetOnFire> SET_ON_FIRE = createBlock("set_on_fire", MapCodec.unit(new SetOnFire()));
+    public static final SpellEffectType<OffsetInDirection> OFFSET_IN_DIRECTION = createBlock("offset_in_direction", OffsetInDirection.CODEC);
     public static final SpellEffectType<LightningStrikeEffect> LIGHTNING_STRIKE = createBlock("lightning_strike", MapCodec.unit(new LightningStrikeEffect()));
 
 

@@ -2,6 +2,7 @@ package de.nexusrealms.creaturemod.entities.projectile;
 
 import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffect;
 import de.nexusrealms.creaturemod.magic.spell.effect.entity.LaunchSpellEffect;
+import de.nexusrealms.creaturemod.util.DirectedBlockPosition;
 import foundry.veil.api.client.render.VeilRenderSystem;
 import foundry.veil.api.quasar.particle.ParticleEmitter;
 import foundry.veil.api.quasar.particle.ParticleSystemManager;
@@ -48,6 +49,7 @@ public class LaunchedSpellEntity extends ExplosiveProjectileEntity {
                     if(emitter != null){
                         emitter.setAttachedEntity(this);
                         particleSystemManager.addParticleSystem(emitter);
+                        hasAttachedEmitter = true;
                     }
                 }
             }
@@ -85,7 +87,7 @@ public class LaunchedSpellEntity extends ExplosiveProjectileEntity {
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
         if(getOwner() instanceof ServerPlayerEntity player){
-            launchEffect.blockHitEffect().ifPresent(effect -> effect.apply(player, new CachedBlockPosition(getWorld(), blockHitResult.getBlockPos(), false), castItem, null));
+            launchEffect.blockHitEffect().ifPresent(effect -> effect.apply(player, new DirectedBlockPosition(getWorld(), blockHitResult.getBlockPos(), false, blockHitResult.getSide()), castItem, null));
         }
         discard();
     }

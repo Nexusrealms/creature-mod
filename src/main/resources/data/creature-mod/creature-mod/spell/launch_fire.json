@@ -18,6 +18,12 @@
       "type": "creature-mod:set_fire_ticks",
       "fireTicks": 1000,
       "fromLava": true
+    },
+    "blockHitEffect": {
+      "type": "creature-mod:offset_in_direction",
+      "effect": {
+        "type": "creature-mod:set_on_fire"
+      }
     }
   },
   "description": {

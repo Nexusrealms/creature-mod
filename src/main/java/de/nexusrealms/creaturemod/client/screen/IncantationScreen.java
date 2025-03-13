@@ -27,7 +27,6 @@ public class IncantationScreen extends Screen {
         this.textField = new TextFieldWidget(this.client.advanceValidatingTextRenderer, 4, this.height - 26, this.width - 4, 12, Text.literal("Where is this displayed"));
         this.textField.setMaxLength(256);
         this.textField.setDrawsBackground(false);
-        this.textField.setText("Vasai scaala");
         this.textField.setFocusUnlocked(false);
         this.addSelectableChild(this.textField);
     }
