@@ -1,15 +1,10 @@
 {
   "flowCost": {
-    "type": "creature-mod:all",
-    "list": [
-      {
-        "type": "creature-mod:simple",
-        "flowUnit": {
-          "element": "creature-mod:fire",
-          "value": 200
-        }
-      }
-    ]
+    "type": "creature-mod:simple",
+    "flowUnit": {
+      "element": "creature-mod:fire",
+      "value": 200
+    }
   },
   "rootEffect": {
     "type": "creature-mod:launch_spell",
@@ -33,5 +28,8 @@
   "delay": 100,
   "useBindData": {
     "itemCooldown": 100
+  },
+  "castingSound": {
+    "sound_id": "entity.blaze.shoot"
   }
 }

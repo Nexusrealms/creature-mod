@@ -1,0 +1,28 @@
+{
+  "flowCost": {
+    "type": "creature-mod:simple",
+    "flowUnit": {
+      "element": "creature-mod:air",
+      "value": 200
+    }
+  },
+  "rootEffect": {
+    "type": "creature-mod:apply_to_nearby",
+    "radius": 10,
+    "effect": {
+      "type": "creature-mod:knock_away_from_origin",
+      "strength": 1
+    }
+  },
+  "description": {
+    "translate": "spell.creature-mod.test"
+  },
+  "incantation": "Vazir en sesro",
+  "delay": 100,
+  "useBindData": {
+    "itemCooldown": 100
+  },
+  "castingSound": {
+      "sound_id": "entity.breeze.wind_burst"
+  }
+}

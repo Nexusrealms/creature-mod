@@ -45,5 +45,8 @@
   "delay": 100,
   "useBindData": {
     "itemCooldown": 100
+  },
+  "castingSound": {
+    "sound_id": "entity.evoker.cast_spell"
   }
 }

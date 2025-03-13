@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class SetOnFire implements SpellEffect<CachedBlockPosition> {
     @Override
     public SpellEffectType<? extends SpellEffect<CachedBlockPosition>> getType() {
-        return null;
+        return SpellEffectType.SET_ON_FIRE;
     }
 
     @Override

@@ -14,13 +14,16 @@ import net.minecraft.registry.Registry;
 import net.minecraft.world.World;
 
 public record SpellEffectType<T extends SpellEffect<?>>(MapCodec<T> codec) {
+
     public static final SpellEffectType<GiveItemEffect> GIVE_ITEM = createEntity("give_item", GiveItemEffect.CODEC);
+    public static final SpellEffectType<KnockAwayFromOrigin> KNOCK_AWAY_FROM_ORIGIN = createEntity("knock_away_from_origin", KnockAwayFromOrigin.CODEC);
     public static final SpellEffectType<ApplyToWorldEffect> APPLY_TO_WORLD = createEntity("apply_to_world", ApplyToWorldEffect.CODEC);
     public static final SpellEffectType<ForwardBeamEffect> FORWARD_BEAM = createEntity("forward_beam", ForwardBeamEffect.CODEC);
     public static final SpellEffectType<ApplyToClickTargetEffect> APPLY_TO_CLICK_TARGET = createEntity("apply_to_click_target", ApplyToClickTargetEffect.CODEC);
     public static final SpellEffectType<ApplyToBlockEffect> APPLY_TO_BLOCK = createEntity("apply_to_block", ApplyToBlockEffect.CODEC);
     public static final SpellEffectType<LaunchSpellEffect> LAUNCH_SPELL = createEntity("launch_spell", LaunchSpellEffect.CODEC);
     public static final SpellEffectType<SetFireTicksEffect> SET_FIRE_TICKS = createEntity("set_fire_ticks", SetFireTicksEffect.CODEC);
+    public static final SpellEffectType<ApplyToNearby> APPLY_TO_NEARBY = createEntity("apply_to_nearby", ApplyToNearby.CODEC);
 
     public static final SpellEffectType<ChangeDaytimeEffect> CHANGE_TIME = createWorld("change_time", ChangeDaytimeEffect.CODEC);
 
