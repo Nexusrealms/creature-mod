@@ -1,12 +1,15 @@
 {
-	"required": true,
-	"package": "de.nexusrealms.creaturemod.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"PlayerEntityMixin",
-		"PlayerInventoryAccessor"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "de.nexusrealms.creaturemod.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerEntityMixin",
+    "PlayerInventoryAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+
+  ]
 }

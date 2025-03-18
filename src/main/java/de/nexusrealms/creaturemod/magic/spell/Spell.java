@@ -25,6 +25,7 @@ import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryFixedCodec;
@@ -38,14 +39,18 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
-public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text description,
+public record Spell(FlowCost flowCost, FlowCost unlockCost, SpellEffect<Entity> rootEffect, Text description,
                     Optional<SoundEvent> soundEvent, Incantation incantation, boolean castOnClient,
                     BindData useBindData, BindData attackBindData, int delay) {
-
+    public static final Codec<List<RegistryEntry<Spell>>> UNLOCKING_CODEC = RegistryFixedCodec.of(ModRegistries.Keys.SPELLS).listOf().xmap(ArrayList::new, Function.identity());
     public static final Codec<Spell> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            FlowCost.CODEC.fieldOf("flowCost").forGetter(Spell::flowCost),
+            FlowCost.CODEC.optionalFieldOf("flowCost", new FlowCost.None()).forGetter(Spell::flowCost),
+            FlowCost.CODEC.optionalFieldOf("unlockCost", new FlowCost.None()).forGetter(Spell::unlockCost),
             SpellEffect.ENTITY_CODEC.fieldOf("rootEffect").forGetter(Spell::rootEffect),
             TextCodecs.CODEC.optionalFieldOf("description", Text.literal("A spell")).forGetter(Spell::description),
             SoundEvent.CODEC.optionalFieldOf("castingSound").forGetter(Spell::soundEvent),
@@ -70,6 +75,7 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
     }
     public static boolean castDirect(ServerPlayerEntity caster, RegistryEntry<Spell> spellRegistryEntry){
         CastDelayComponent component = caster.getComponent(ModEntityComponents.CAST_DELAY_COMPONENT);
+        if(!UnlockedSpellsComponents.canUse(spellRegistryEntry, caster)) return false;
         if(!spellRegistryEntry.hasKeyAndValue()) {
             CreatureMod.LOGGER.error("Invalid spell cast!");
             return false;
@@ -129,6 +135,7 @@ public record Spell(FlowCost flowCost, SpellEffect<Entity> rootEffect, Text desc
     public static boolean bind(ServerPlayerEntity player, RegistryEntry<Spell> spellRegistryEntry, boolean isAttackBind){
         TagKey<Item> tag = isAttackBind ? ModTags.ATTACK_BINDABLE : ModTags.USE_BINDABLE;
         ItemStack stack = player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? player.getStackInHand(Hand.OFF_HAND) : player.getStackInHand(Hand.MAIN_HAND);
+        if(!UnlockedSpellsComponents.canUse(spellRegistryEntry, player)) return false;
         if(stack.isIn(tag)){
             BindData bindData = isAttackBind ? spellRegistryEntry.value().attackBindData() : spellRegistryEntry.value().useBindData();
             if (bindData.bindCost().drain(FlowStorage.getFlowStorage(player))){

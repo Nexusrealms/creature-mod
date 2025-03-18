@@ -30,6 +30,7 @@ import net.minecraft.util.Hand;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import static net.minecraft.server.command.CommandManager.literal;
 import static net.minecraft.server.command.CommandManager.argument;
@@ -108,6 +109,21 @@ public class ModCommands {
                             commandContext.getSource().sendFeedback(() -> Text.literal(FlowStorage.getFlowStorage(commandContext.getSource().getPlayer()).dumpFlow()), false);
                             return  1;
                         }));
+                //TODO Proper command
+                commandDispatcher.register(literal("spelllock")
+                        .then(literal("list")
+                                .requires(ServerCommandSource::isExecutedByPlayer)
+                                .executes(commandContext -> {
+                                    commandContext.getSource().sendFeedback(() -> Text.literal(commandContext.getSource().getPlayer().getComponent(ModEntityComponents.UNLOCKED_SPELLS_COMPONENT).listUnlocked(commandRegistryAccess)), false);
+                                    return 1;
+                                }))
+                        .then(literal("unlock")
+                                .then(argument("spell", RegistryEntryReferenceArgumentType.registryEntry(commandRegistryAccess, ModRegistries.Keys.SPELLS))
+                                        .requires(ServerCommandSource::isExecutedByPlayer)
+                                        .executes(commandContext -> {
+                                            commandContext.getSource().sendFeedback(s(Text.literal(commandContext.getSource().getPlayer().getComponent(ModEntityComponents.UNLOCKED_SPELLS_COMPONENT).unlock(RegistryEntryReferenceArgumentType.getRegistryEntry(commandContext, "spell", ModRegistries.Keys.SPELLS)) ? "Unlocked" : "Not unlocked")), false);
+                                            return 1;
+                                        }))));
             }
             commandDispatcher.register(literal("flow")
                     .then(literal("add")
@@ -164,4 +180,8 @@ public class ModCommands {
                             })));
         });
     }
+    private static <T> Supplier<T> s(T t){
+        return () -> t;
+    }
+
 }
