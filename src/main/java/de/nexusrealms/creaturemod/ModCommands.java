@@ -114,7 +114,7 @@ public class ModCommands {
                         .then(literal("list")
                                 .requires(ServerCommandSource::isExecutedByPlayer)
                                 .executes(commandContext -> {
-                                    commandContext.getSource().sendFeedback(() -> Text.literal(commandContext.getSource().getPlayer().getComponent(ModEntityComponents.UNLOCKED_SPELLS_COMPONENT).listUnlocked(commandRegistryAccess)), false);
+                                    commandContext.getSource().sendFeedback(() -> Text.literal(commandContext.getSource().getPlayer().getComponent(ModEntityComponents.UNLOCKED_SPELLS_COMPONENT).listUnlocked(commandContext.getSource().getRegistryManager())), false);
                                     return 1;
                                 }))
                         .then(literal("unlock")
