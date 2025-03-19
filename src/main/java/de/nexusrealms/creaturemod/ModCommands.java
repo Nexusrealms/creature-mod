@@ -171,7 +171,7 @@ public class ModCommands {
                             .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4) && serverCommandSource.isExecutedByPlayer())
                             .executes(commandContext -> {
                                 String words = StringArgumentType.getString(commandContext, "words");
-                                if(Incantation.process(commandContext.getSource().getPlayer(), commandRegistryAccess, words)){
+                                if(Incantation.process(commandContext.getSource().getPlayer(), commandRegistryAccess, words).isSuccess()){
                                     commandContext.getSource().sendFeedback(() -> Text.translatable("message.creature-mod.incantation.success", words), false);
                                 } else {
                                     commandContext.getSource().sendError(Text.translatable("message.creature-mod.incantation.failure", words));

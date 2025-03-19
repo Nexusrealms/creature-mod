@@ -61,7 +61,7 @@ public record Spell(FlowCost flowCost, FlowCost unlockCost, SpellEffect<Entity> 
             Codec.INT.optionalFieldOf("delay", 0).forGetter(Spell::delay)
     ).apply(instance, Spell::new));
 
-    public boolean castServer(ServerPlayerEntity caster, @Nullable ItemStack castingItem, @Nullable Entity clickTarget) {
+    public CastResult castServer(ServerPlayerEntity caster, @Nullable ItemStack castingItem, @Nullable Entity clickTarget) {
         FlowStorage flowStorage = FlowStorage.getFlowStorage(caster);
         if (flowCost.drain(flowStorage)) {
             soundEvent.ifPresent(sound -> caster.getWorld().playSound(null, caster.getBlockPos(), sound, SoundCategory.PLAYERS, 1f, 1f));
@@ -69,27 +69,29 @@ public record Spell(FlowCost flowCost, FlowCost unlockCost, SpellEffect<Entity> 
                 RegistryEntry<Spell> entryOfThis = caster.getWorld().getRegistryManager().get(ModRegistries.Keys.SPELLS).getEntry(this);
                 PlayerLookup.all(caster.server).forEach(player -> ServerPlayNetworking.send(player, new CastSpellPacket(caster.getUuid(), entryOfThis)));
             }
-            return rootEffect.apply(caster, caster, castingItem, clickTarget);
+            rootEffect.apply(caster, caster, castingItem, clickTarget);
+            return CastResult.CAST;
         }
-        return false;
+        return CastResult.NO_FLOW;
     }
-    public static boolean castDirect(ServerPlayerEntity caster, RegistryEntry<Spell> spellRegistryEntry){
+    public static CastResult castDirect(ServerPlayerEntity caster, RegistryEntry<Spell> spellRegistryEntry){
         CastDelayComponent component = caster.getComponent(ModEntityComponents.CAST_DELAY_COMPONENT);
-        if(!UnlockedSpellsComponents.canUse(spellRegistryEntry, caster)) return false;
+        if(!UnlockedSpellsComponents.canUse(spellRegistryEntry, caster)) return CastResult.LOCKED;
         if(!spellRegistryEntry.hasKeyAndValue()) {
             CreatureMod.LOGGER.error("Invalid spell cast!");
-            return false;
+            return CastResult.INVALID_SPELL;
         }
         if(component.isReady(spellRegistryEntry.getKey().get())){
-            if(spellRegistryEntry.value().castServer(caster, null, null)){
+            CastResult result = spellRegistryEntry.value().castServer(caster, null, null);
+            if(result.isSuccess()){
                 int delay = spellRegistryEntry.value().delay();
                 if(delay > 0){
                     component.addDelay(spellRegistryEntry.getKey().get(), delay);
                 }
-                return true;
+                return result;
             }
         }
-        return false;
+        return CastResult.DELAYED;
     }
     public static TypedActionResult<ItemStack> castUse(ServerPlayerEntity caster, RegistryEntry<Spell> spellRegistryEntry, ItemStack stack, @Nullable Entity clickTarget){
         BindData data = spellRegistryEntry.value().useBindData();
@@ -108,7 +110,8 @@ public record Spell(FlowCost flowCost, FlowCost unlockCost, SpellEffect<Entity> 
             }
             Spell spell = spellRegistryEntry.value();
             if(component.isReady(spellRegistryEntry.getKey().get())){
-                if(spell.castServer(caster, stack, clickTarget)){
+                CastResult result = spell.castServer(caster, stack, clickTarget);
+                if(result.isSuccess()){
                     int delay = bindData.delayOverride() >= 0 ? bindData.delayOverride() : spellRegistryEntry.value().delay();
                     if(delay > 0){
                         component.addDelay(spellRegistryEntry.getKey().get(), delay);
@@ -132,19 +135,20 @@ public record Spell(FlowCost flowCost, FlowCost unlockCost, SpellEffect<Entity> 
     public boolean matchesAttackBind(String words){
         return incantation.matches(words, attackBindData.addition);
     }
-    public static boolean bind(ServerPlayerEntity player, RegistryEntry<Spell> spellRegistryEntry, boolean isAttackBind){
+    public static CastResult bind(ServerPlayerEntity player, RegistryEntry<Spell> spellRegistryEntry, boolean isAttackBind){
         TagKey<Item> tag = isAttackBind ? ModTags.ATTACK_BINDABLE : ModTags.USE_BINDABLE;
         ItemStack stack = player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? player.getStackInHand(Hand.OFF_HAND) : player.getStackInHand(Hand.MAIN_HAND);
-        if(!UnlockedSpellsComponents.canUse(spellRegistryEntry, player)) return false;
+        if(!UnlockedSpellsComponents.canUse(spellRegistryEntry, player)) return CastResult.LOCKED;
         if(stack.isIn(tag)){
             BindData bindData = isAttackBind ? spellRegistryEntry.value().attackBindData() : spellRegistryEntry.value().useBindData();
             if (bindData.bindCost().drain(FlowStorage.getFlowStorage(player))){
                 Bind bind = new Bind(spellRegistryEntry);
                 stack.set(isAttackBind ? ModItemComponents.ATTACK_BIND : ModItemComponents.USE_BIND, bind);
-                return true;
+                return CastResult.BOUND;
             }
+            return CastResult.NO_BIND_FLOW;
         }
-        return false;
+        return CastResult.INVALID_ITEM;
     }
     public record BindData(boolean bindable, int delayOverride, Optional<String> invocationOverride, Incantation.WordsAddition addition, ItemPredicate bindablePredicate, int itemCooldown, FlowCost bindCost){
         public static final Codec<BindData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -160,5 +164,33 @@ public record Spell(FlowCost flowCost, FlowCost unlockCost, SpellEffect<Entity> 
     public record Bind(RegistryEntry<Spell> spell){
         public static final Codec<Bind> CODEC = RegistryFixedCodec.of(ModRegistries.Keys.SPELLS).xmap(Bind::new, Bind::spell);
         public static final PacketCodec<RegistryByteBuf, Bind> PACKET_CODEC = PacketCodecs.registryEntry(ModRegistries.Keys.SPELLS).xmap(Bind::new, Bind::spell);
+    }
+    public enum CastResult{
+        CAST("cast", true),
+        CAST_UNLOCKED("cast_unlocked", true),
+        BOUND("bound", true),
+        LOCKED("locked", false),
+        DELAYED("delayed", false),
+        NO_FLOW("no_flow", false),
+        NO_BIND_FLOW("no_bind_flow", false),
+        INVALID_ITEM("invalid_item", false),
+        INVALID_SPELL("invalid_spell", false),
+        NO_SPELL("no_spell", false);
+
+        private final String messageKey;
+        private final boolean success;
+
+        CastResult(String messageKey, boolean success) {
+            this.messageKey = messageKey;
+            this.success = success;
+        }
+
+        public String getMessageKey() {
+            return "message.creature-mod.spell." + messageKey;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
     }
 }

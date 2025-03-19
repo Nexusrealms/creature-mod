@@ -57,18 +57,17 @@ public record Incantation(String words) {
             return Optional.of(list.getFirst());
         }
     }
-    public static boolean process(ServerPlayerEntity player, RegistryWrapper.WrapperLookup wrapperLookup, String words){
+    public static Spell.CastResult process(ServerPlayerEntity player, RegistryWrapper.WrapperLookup wrapperLookup, String words){
         Optional<RegistryEntry<Spell>> castOptional = lookupCast(wrapperLookup, words);
         if(castOptional.isPresent()){
-            Spell.castDirect(player, castOptional.get());
-            return true;
+            return Spell.castDirect(player, castOptional.get());
         }
         Optional<RegistryEntry<Spell>> useBindOptional = lookupUseBind(wrapperLookup, words);
         if(useBindOptional.isPresent()){
             return Spell.bind(player, useBindOptional.get(), false);
         }
         Optional<RegistryEntry<Spell>> attackBindOptional = lookupAttackBind(wrapperLookup, words);
-        return attackBindOptional.filter(spellRegistryEntry -> Spell.bind(player, spellRegistryEntry, true)).isPresent();
+        return attackBindOptional.map(spellRegistryEntry -> Spell.bind(player, spellRegistryEntry, true)).orElse(Spell.CastResult.NO_SPELL);
     }
     public record WordsAddition(String prefix, String suffix){
         public static final Codec<WordsAddition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
