@@ -30,10 +30,6 @@ public class ModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         generateSpawnEggModels(itemModelGenerator);
         itemModelGenerator.register(ModItems.GARLIC_CLOVE, Models.GENERATED);
-        Models.GENERATED_TWO_LAYERS.upload(
-                ModelIds.getItemModelId(ModItems.ELEMENT_FLASK),
-                TextureMap.layered(CreatureMod.id("item/element_flask"), CreatureMod.id("item/element_flask_overlay")),
-                itemModelGenerator.writer);
     }
     private void generateSpawnEggModels(ItemModelGenerator itemModelGenerator){
         makeSpawnEgg(itemModelGenerator, ModEntities.BEAR);

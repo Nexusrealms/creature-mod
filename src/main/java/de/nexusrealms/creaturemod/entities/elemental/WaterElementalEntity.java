@@ -40,4 +40,7 @@ public class WaterElementalEntity extends PathAwareEntity implements SmartBrainO
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
+    public boolean shouldRenderOuter(){
+        return !isTouchingWater();
+    }
 }

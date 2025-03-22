@@ -52,9 +52,6 @@
 			"creature-mod:cast_delay",
 			"creature-mod:unlocked_spells"
 
-		],
-		"loom:injected_interfaces": {
-			"net/minecraft/class_1657": ["de/nexusrealms/creaturemod/magic/flow/InventoryFlowStorageProvider"]
-		}
+		]
 	}
 }

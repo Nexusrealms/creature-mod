@@ -30,7 +30,6 @@ public class LangProvider extends FabricLanguageProvider {
     private void generateItemTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
         translationBuilder.add(ModItems.GARLIC_CLOVE, "Garlic Clove");
         translationBuilder.add(ModItems.GARLIC_BULB, "Garlic Bulb");
-        translationBuilder.add(ModItems.ELEMENT_FLASK, "Element Flask");
     }
     private void generateEntityTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder){
         generateEntityTranslationWithSpawnEgg(wrapperLookup, translationBuilder, ModEntities.WEREWOLF, "Werewolf");

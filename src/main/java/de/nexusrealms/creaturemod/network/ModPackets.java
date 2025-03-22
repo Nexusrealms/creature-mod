@@ -14,10 +14,8 @@ public class ModPackets {
         initS2C();
     }
     private static void initS2C(){
-        registerClientReceiverPacket(CastSpellPacket.PACKET_ID, CastSpellPacket.PACKET_CODEC);
     }
     private static void initC2S(){
-        registerServerReceiverPacket(IncantationPacket.PACKET_ID, IncantationPacket.PACKET_CODEC);
     }
 
 

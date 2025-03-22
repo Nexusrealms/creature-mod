@@ -4,7 +4,6 @@ import de.nexusrealms.creaturemod.CreatureMod;
 import de.nexusrealms.creaturemod.entities.elemental.AirElementalEntity;
 import de.nexusrealms.creaturemod.entities.elemental.WaterElementalEntity;
 import de.nexusrealms.creaturemod.entities.natural.BearEntity;
-import de.nexusrealms.creaturemod.entities.projectile.LaunchedSpellEntity;
 import de.nexusrealms.creaturemod.entities.spectral.WraithEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerebatEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerebearEntity;
@@ -45,8 +44,6 @@ public class ModEntities {
     public static final EntityType<WaterElementalEntity> WATER_ELEMENTAL = createWithSpawnEgg("water_elemental", EntityType.Builder.create(WaterElementalEntity::new, SpawnGroup.MONSTER)
             .dimensions(1.2f, 0.8f).build(), 0xFFFFFF, 0xFFFFF0, WaterElementalEntity::getDefaultAttributes);
 
-    public static final EntityType<LaunchedSpellEntity> LAUNCHED_SPELL = create("launched_spell", EntityType.Builder.create(LaunchedSpellEntity::new, SpawnGroup.MISC)
-            .dimensions(0.25f, 0.25f).build());
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,
                                                                          int primaryColor,

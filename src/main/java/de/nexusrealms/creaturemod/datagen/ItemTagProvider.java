@@ -17,9 +17,6 @@ public class ItemTagProvider extends FabricTagProvider<Item> {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(ModTags.USE_BINDABLE)
-                .add(Items.STICK);
-        getOrCreateTagBuilder(ModTags.ATTACK_BINDABLE)
-                .add(Items.DIAMOND_SWORD);
+
     }
 }

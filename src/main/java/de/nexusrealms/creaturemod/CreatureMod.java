@@ -6,25 +6,12 @@ import de.nexusrealms.creaturemod.entities.ModEntities;
 import de.nexusrealms.creaturemod.entities.brain.ModActivities;
 import de.nexusrealms.creaturemod.entities.brain.memory.ModMemories;
 import de.nexusrealms.creaturemod.entities.brain.sensor.ModSensors;
-import de.nexusrealms.creaturemod.items.ModItemComponents;
 import de.nexusrealms.creaturemod.items.ModItemGroups;
 import de.nexusrealms.creaturemod.items.ModItems;
-import de.nexusrealms.creaturemod.magic.element.Elements;
-import de.nexusrealms.creaturemod.magic.flow.FlowCostType;
-import de.nexusrealms.creaturemod.magic.spell.Spell;
-import de.nexusrealms.creaturemod.magic.spell.effect.SpellEffectType;
 import de.nexusrealms.creaturemod.network.ModPackets;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,46 +49,7 @@ public class CreatureMod implements ModInitializer {
 		ModSensors.init();
 		ModEntities.init();
 		Curses.init();
-		Elements.init();
-		FlowCostType.init();
-		SpellEffectType.init();
 
-		UseItemCallback.EVENT.register((playerEntity, world, hand) -> {
-			ItemStack stack = playerEntity.getStackInHand(hand);
-			if(playerEntity instanceof ServerPlayerEntity player){
-				if(stack.isIn(ModTags.USE_BINDABLE)){
-					if(stack.contains(ModItemComponents.USE_BIND)){
-						RegistryEntry<Spell> spellRegistryEntry = stack.get(ModItemComponents.USE_BIND).spell();
-						return Spell.castUse(player, spellRegistryEntry, stack, null);
-					}
-				}
-			}
-			return TypedActionResult.pass(stack);
-		});
-		UseEntityCallback.EVENT.register((playerEntity, world, hand, entity, entityHitResult) -> {
-			ItemStack stack = playerEntity.getStackInHand(hand);
-			if(playerEntity instanceof ServerPlayerEntity player){
-				if(stack.isIn(ModTags.USE_BINDABLE)){
-					if(stack.contains(ModItemComponents.USE_BIND)){
-						RegistryEntry<Spell> spellRegistryEntry = stack.get(ModItemComponents.USE_BIND).spell();
-						return Spell.castUse(player, spellRegistryEntry, stack, entity).getResult();
-					}
-				}
-			}
-			return TypedActionResult.pass(stack).getResult();
-		});
-		AttackEntityCallback.EVENT.register((playerEntity, world, hand, entity, entityHitResult) -> {
-			ItemStack stack = playerEntity.getStackInHand(hand);
-			if(playerEntity instanceof ServerPlayerEntity player){
-				if(stack.isIn(ModTags.ATTACK_BINDABLE)){
-					if(stack.contains(ModItemComponents.ATTACK_BIND)){
-						RegistryEntry<Spell> spellRegistryEntry = stack.get(ModItemComponents.ATTACK_BIND).spell();
-						return Spell.castAttack(player, spellRegistryEntry, stack, entity).getResult();
-					}
-				}
-			}
-			return TypedActionResult.pass(stack).getResult();
-		});
 		LOGGER.info("Hello Fabric world!");
 	}
 }
