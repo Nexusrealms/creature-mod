@@ -42,7 +42,7 @@ public class ModEntities {
     public static final EntityType<AirElementalEntity> AIR_ELEMENTAL = createWithSpawnEgg("air_elemental", EntityType.Builder.create(AirElementalEntity::new, SpawnGroup.MONSTER)
             .dimensions(1.2f, 1.2f).build(), 0xFFFFFF, 0xFFFFF0, AirElementalEntity::getDefaultAttributes);
     public static final EntityType<WaterElementalEntity> WATER_ELEMENTAL = createWithSpawnEgg("water_elemental", EntityType.Builder.create(WaterElementalEntity::new, SpawnGroup.MONSTER)
-            .dimensions(1.2f, 0.8f).build(), 0xFFFFFF, 0xFFFFF0, WaterElementalEntity::getDefaultAttributes);
+            .dimensions(1.2f, 0.8f).build(), 0x0000FF, 0x00FFFF, WaterElementalEntity::getDefaultAttributes);
 
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,

@@ -39,6 +39,7 @@ public class ModelProvider extends FabricModelProvider {
         makeSpawnEgg(itemModelGenerator, ModEntities.WERECAT);
         makeSpawnEgg(itemModelGenerator, ModEntities.WEREBAT);
         makeSpawnEgg(itemModelGenerator, ModEntities.AIR_ELEMENTAL);
+        makeSpawnEgg(itemModelGenerator, ModEntities.WATER_ELEMENTAL);
     }
     private void makeSpawnEgg(ItemModelGenerator generator, EntityType<?> entityType){
         if(SpawnEggItem.forEntity(entityType) instanceof SpawnEggItem item){
