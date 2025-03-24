@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.pathing.AmphibiousSwimNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -14,6 +15,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.world.World;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -52,13 +54,13 @@ public class WaterElementalEntity extends PathAwareEntity implements SmartBrainO
 
     public WaterElementalEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new AquaticMoveControl(this, 90, 90, 1, 1, false);
+        this.moveControl = new AquaticMoveControl(this, 90, 90, 1.2f, 1, false);
 
     }
     public static DefaultAttributeContainer getDefaultAttributes(){
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.50000001192092896)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.250001192092896)
                 .add(EntityAttributes.GENERIC_WATER_MOVEMENT_EFFICIENCY, 1).build();
 
     }
@@ -72,6 +74,8 @@ public class WaterElementalEntity extends PathAwareEntity implements SmartBrainO
                 new NearbyLivingEntitySensor<>(), // This tracks nearby entities
                 new HurtBySensor<>());
     }
+
+
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
@@ -121,7 +125,7 @@ public class WaterElementalEntity extends PathAwareEntity implements SmartBrainO
     public BrainActivityGroup<WaterElementalEntity> getIdleTasks() { // These are the tasks that run when the mob isn't doing anything else (usually)
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour<>(// Run only one of the below behaviours, trying each one in order. Include the generic type because JavaC is silly
-                        new TargetOrRetaliate<>(),            // Set the attack target and walk target based on nearby entities
+                        new TargetOrRetaliate<>().attackablePredicate(living -> !living.getType().isIn(EntityTypeTags.AQUATIC)),            // Set the attack target and walk target based on nearby entities
                         new SetPlayerLookTarget<>(),          // Set the look target for the nearest player
                         new SetRandomLookTarget<>()),         // Set a random look target
                 new OneRandomBehaviour<>(                 // Run a random task from the below options
