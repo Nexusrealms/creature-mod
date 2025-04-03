@@ -29,9 +29,9 @@ public class ModEntities {
     public static final EntityType<BearEntity> BEAR = createWithSpawnEgg("bear", EntityType.Builder.create(BearEntity::new, SpawnGroup.CREATURE)
             .dimensions(1.2f, 1f).build(), 0xb77635, 0x63401c, BearEntity::getDefaultAttributes);
     public static final EntityType<WerewolfEntity> WEREWOLF = createWithSpawnEgg("werewolf", EntityType.Builder.create(WerewolfEntity::new, SpawnGroup.MONSTER)
-            .dimensions(0.8f, 1.8f).build(), 0xFFFFFF, 0x000000, WerewolfEntity::getDefaultAttributes);
+            .dimensions(0.9f, 1.8f).build(), 0xFFFFFF, 0x000000, WerewolfEntity::getDefaultAttributes);
     public static final EntityType<WerebearEntity> WEREBEAR = createWithSpawnEgg("werebear", EntityType.Builder.create(WerebearEntity::new, SpawnGroup.MONSTER)
-            .dimensions(1.f, 2f).build(), 0xb77635, 0x000000, WerebearEntity::getDefaultAttributes);
+            .dimensions(1.1f, 2f).build(), 0xb77635, 0x000000, WerebearEntity::getDefaultAttributes);
     public static final EntityType<WerecatEntity> WERECAT = createWithSpawnEgg("werecat", EntityType.Builder.create(WerecatEntity::new, SpawnGroup.MONSTER)
             .dimensions(0.8f, 1.9f).build(), 0xFFFFFF, 0x000000, WerecatEntity::getDefaultAttributes);
     public static final EntityType<WerebatEntity> WEREBAT = createWithSpawnEgg("werebat", EntityType.Builder.create(WerebatEntity::new, SpawnGroup.MONSTER)
