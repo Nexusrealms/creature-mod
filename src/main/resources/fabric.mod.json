@@ -3,15 +3,16 @@
 	"id": "creature-mod",
 	"version": "${version}",
 	"name": "Creature Mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A mod which adds more life to the world, from animals to spectres",
 	"authors": [
-		"Me!"
+		"Farpo",
+		"DinoTheOogle"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Nexusrealms/creature-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/creature-mod/icon.png",
 	"environment": "*",
 	"entrypoints": {

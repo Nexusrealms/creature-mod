@@ -35,7 +35,7 @@ public class CreatureModClient implements ClientModInitializer {
         registerSimpleEntityRenderer(ModEntities.WEREWOLF);
         registerSimpleEntityRenderer(ModEntities.WEREBEAR);
         registerSimpleEntityRenderer(ModEntities.WRAITH);
-        registerEmptyEntityRenderer(ModEntities.AIR_ELEMENTAL);
+        registerSimpleEntityRenderer(ModEntities.AIR_ELEMENTAL);
         EntityRendererRegistry.register(ModEntities.WATER_ELEMENTAL, WaterElementalRenderer::new);
         registerSimpleEntityRenderer(ModEntities.WERECAT);
         registerSimpleEntityRenderer(ModEntities.WEREBAT);

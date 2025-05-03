@@ -39,13 +39,21 @@ import net.tslat.smartbrainlib.api.core.navigation.SmoothFlyingPathNavigation;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
+import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class AirElementalEntity extends PathAwareEntity implements SmartBrainOwner<AirElementalEntity> {
+public class AirElementalEntity extends PathAwareEntity implements SmartBrainOwner<AirElementalEntity>, GeoEntity {
     private boolean hasAttachedEmitter = false;
     private boolean isDamageEmitterAttached = false;
-
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    protected static final RawAnimation MOVE = RawAnimation.begin().thenLoop("Move");
     private static final Identifier EMITTER = CreatureMod.id("air_elemental_body");
     private static final Identifier HURT_EMITTER = CreatureMod.id("air_elemental_hurt");
 
@@ -54,7 +62,7 @@ public class AirElementalEntity extends PathAwareEntity implements SmartBrainOwn
         this.moveControl = new FlightMoveControl(this, 90, true);
     }
     public static DefaultAttributeContainer getDefaultAttributes(){
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 16)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.50000001192092896).build();
 
@@ -140,5 +148,15 @@ public class AirElementalEntity extends PathAwareEntity implements SmartBrainOwn
                 new InvalidateAttackTarget<>().invalidateIf((entity, target) -> target instanceof PlayerEntity player && player.getAbilities().invulnerable), // Cancel fighting if the target is no longer valid
                 new SetWalkTargetToAttackTarget<>(),      // Set the walk target to the attack target
                 new AnimatableMeleeAttack<>(0)); // Melee attack the target if close enough
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<>(this, animationState -> animationState.setAndContinue(MOVE)));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

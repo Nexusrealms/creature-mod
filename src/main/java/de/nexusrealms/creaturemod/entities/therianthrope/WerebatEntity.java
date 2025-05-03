@@ -60,7 +60,7 @@ public class WerebatEntity extends TherianthropeEntity implements SmartBrainOwne
     }
 
     public static DefaultAttributeContainer getDefaultAttributes(){
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 24)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.30000001192092896).build();
 
