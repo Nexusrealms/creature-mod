@@ -9,6 +9,7 @@ import de.nexusrealms.creaturemod.entities.therianthrope.WerebatEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerebearEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerecatEntity;
 import de.nexusrealms.creaturemod.entities.therianthrope.WerewolfEntity;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
@@ -22,6 +23,7 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.BiomeTags;
 
 import java.util.function.Supplier;
 
@@ -70,5 +72,12 @@ public class ModEntities {
     private static <T extends Entity> EntityType<T> create(String name, EntityType<T> entityType){
         return Registry.register(Registries.ENTITY_TYPE, CreatureMod.id(name), entityType);
     }
-    public static void init(){}
+    public static void init(){
+        BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.IS_TAIGA), SpawnGroup.MONSTER, WEREBEAR, 1, 1, 1);
+        BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.IS_FOREST), SpawnGroup.MONSTER, WEREWOLF, 2, 1, 1);
+        BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.IS_JUNGLE), SpawnGroup.MONSTER, WERECAT, 2, 1, 1);
+        BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.MINESHAFT_HAS_STRUCTURE), SpawnGroup.MONSTER, WEREBAT, 1, 1, 1);
+
+
+    }
 }
