@@ -222,7 +222,7 @@ public class BearEntity extends AnimalEntity implements SmartBrainOwner<BearEnti
     public BrainActivityGroup<BearEntity> getFightTasks() { // These are the tasks that handle fighting
         return BrainActivityGroup.fightTasks(
                 new InvalidateAttackTarget<>(), // Cancel fighting if the target is no longer valid
-                new SetWalkTargetToAttackTarget<>(),
+                new SetWalkTargetToAttackTarget<>().speedMod((mobEntity, livingEntity) -> 2f),
                 new AnimatableMeleeAttack<>(0)); // Melee attack the target if close enough
     }
     public BrainActivityGroup<BearEntity> getEatHoneyTasks(){

@@ -70,13 +70,16 @@ public class ModEntities {
         return create(name, entityType);
     }
     private static <T extends Entity> EntityType<T> create(String name, EntityType<T> entityType){
+
         return Registry.register(Registries.ENTITY_TYPE, CreatureMod.id(name), entityType);
     }
     public static void init(){
         BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.IS_TAIGA), SpawnGroup.MONSTER, WEREBEAR, 1, 1, 1);
         BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.IS_FOREST), SpawnGroup.MONSTER, WEREWOLF, 2, 1, 1);
+        BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.IS_FOREST), SpawnGroup.CREATURE, BEAR, 6, 1, 4);
         BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.IS_JUNGLE), SpawnGroup.MONSTER, WERECAT, 2, 1, 1);
         BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.MINESHAFT_HAS_STRUCTURE), SpawnGroup.MONSTER, WEREBAT, 1, 1, 1);
+        BiomeModifications.addSpawn(ctx -> ctx.hasTag(BiomeTags.WOODLAND_MANSION_HAS_STRUCTURE), SpawnGroup.MONSTER, WRAITH, 2, 1, 1);
 
 
     }
