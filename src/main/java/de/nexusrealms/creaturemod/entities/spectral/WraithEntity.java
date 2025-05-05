@@ -51,7 +51,8 @@ public class WraithEntity extends PathAwareEntity implements SmartBrainOwner<Wra
     public static DefaultAttributeContainer getDefaultAttributes(){
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000001192092896).build();
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000001192092896)
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 3.5).build();
 
     }
     @Override
@@ -97,7 +98,7 @@ public class WraithEntity extends PathAwareEntity implements SmartBrainOwner<Wra
     public BrainActivityGroup<WraithEntity> getFightTasks() { // These are the tasks that handle fighting
         return BrainActivityGroup.fightTasks(
                 new InvalidateAttackTarget<>().invalidateIf((entity, target) -> target instanceof PlayerEntity player && player.getAbilities().invulnerable), // Cancel fighting if the target is no longer valid
-                new SetWalkTargetToAttackTarget<>(),      // Set the walk target to the attack target
+                new SetWalkTargetToAttackTarget<>().speedMod((mobEntity, livingEntity) -> 1.8f),      // Set the walk target to the attack target
                 new AnimatableMeleeAttack<>(0)); // Melee attack the target if close enough
     }
 

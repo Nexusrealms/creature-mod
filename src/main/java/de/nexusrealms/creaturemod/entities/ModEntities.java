@@ -31,20 +31,20 @@ public class ModEntities {
     public static final EntityType<BearEntity> BEAR = createWithSpawnEgg("bear", EntityType.Builder.create(BearEntity::new, SpawnGroup.CREATURE)
             .dimensions(1.2f, 1f).build(), 0xb77635, 0x63401c, BearEntity::getDefaultAttributes);
     public static final EntityType<WerewolfEntity> WEREWOLF = createWithSpawnEgg("werewolf", EntityType.Builder.create(WerewolfEntity::new, SpawnGroup.MONSTER)
-            .dimensions(0.9f, 1.8f).build(), 0xFFFFFF, 0x000000, WerewolfEntity::getDefaultAttributes);
+            .dimensions(0.9f, 1.8f).build(), 0x643821, 0xa59381, WerewolfEntity::getDefaultAttributes);
     public static final EntityType<WerebearEntity> WEREBEAR = createWithSpawnEgg("werebear", EntityType.Builder.create(WerebearEntity::new, SpawnGroup.MONSTER)
             .dimensions(1.1f, 2f).build(), 0xb77635, 0x000000, WerebearEntity::getDefaultAttributes);
     public static final EntityType<WerecatEntity> WERECAT = createWithSpawnEgg("werecat", EntityType.Builder.create(WerecatEntity::new, SpawnGroup.MONSTER)
-            .dimensions(0.8f, 1.9f).build(), 0xFFFFFF, 0x000000, WerecatEntity::getDefaultAttributes);
+            .dimensions(0.8f, 1.9f).build(), 0xddb475, 0xddb475, WerecatEntity::getDefaultAttributes);
     public static final EntityType<WerebatEntity> WEREBAT = createWithSpawnEgg("werebat", EntityType.Builder.create(WerebatEntity::new, SpawnGroup.MONSTER)
-            .dimensions(0.8f, 1.7f).build(), 0xFFFFFF, 0x000000, WerebatEntity::getDefaultAttributes);
+            .dimensions(0.8f, 1.7f).build(), 0x26211f, 0x825f7f, WerebatEntity::getDefaultAttributes);
 
     public static final EntityType<WraithEntity> WRAITH = createWithSpawnEgg("wraith", EntityType.Builder.create(WraithEntity::new, SpawnGroup.MONSTER)
             .dimensions(0.8f, 1.8f).build(), 0x000000, 0xFF0000, WraithEntity::getDefaultAttributes);
     public static final EntityType<AirElementalEntity> AIR_ELEMENTAL = createWithSpawnEgg("air_elemental", EntityType.Builder.create(AirElementalEntity::new, SpawnGroup.MONSTER)
-            .dimensions(1.2f, 1.2f).build(), 0xFFFFFF, 0xFFFFF0, AirElementalEntity::getDefaultAttributes);
+            .dimensions(1.2f, 1.2f).build(), 0xb4d9e7, 0x7a86c5, AirElementalEntity::getDefaultAttributes);
     public static final EntityType<WaterElementalEntity> WATER_ELEMENTAL = createWithSpawnEgg("water_elemental", EntityType.Builder.create(WaterElementalEntity::new, SpawnGroup.MONSTER)
-            .dimensions(0.8f, 0.8f).build(), 0x0000FF, 0x00FFFF, WaterElementalEntity::getDefaultAttributes);
+            .dimensions(0.8f, 0.8f).build(), 0x0cc3ca, 0xf89520, WaterElementalEntity::getDefaultAttributes);
 
     private static <T extends MobEntity> EntityType<T> createWithSpawnEgg(String name,
                                                                          EntityType<T> entityType,

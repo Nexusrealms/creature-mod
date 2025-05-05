@@ -9,7 +9,7 @@
 		"DinoTheOogle"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
+		"homepage": "https://nexusrealms.de/",
 		"sources": "https://github.com/Nexusrealms/creature-mod"
 	},
 	"license": "MIT",
@@ -48,11 +48,7 @@
 	"custom": {
 		"cardinal-components": [
 			"creature-mod:curses",
-			"creature-mod:therianthropy",
-			"creature-mod:player_flow_storage",
-			"creature-mod:cast_delay",
-			"creature-mod:unlocked_spells"
-
+			"creature-mod:therianthropy"
 		]
 	}
 }

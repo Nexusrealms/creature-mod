@@ -113,7 +113,7 @@ public class WerebatEntity extends TherianthropeEntity implements SmartBrainOwne
     public BrainActivityGroup<WerebatEntity> getFightTasks() { // These are the tasks that handle fighting
         return BrainActivityGroup.fightTasks(
                 new InvalidateAttackTarget<>(), // Cancel fighting if the target is no longer valid
-                new SetWalkTargetToAttackTarget<>(),
+                new SetWalkTargetToAttackTarget<>().speedMod((mobEntity, livingEntity) -> 2f),
                 new AnimatableMeleeAttack<>(0)); // Melee attack the target if close enough
     }
     @Override
